@@ -52,7 +52,6 @@ class IdleState:
             boy.velocity -= FLY_SPEED_PPS
         elif event == LEFT_UP:
             boy.velocity += FLY_SPEED_PPS
-
         if event == PULLUP_DOWN:
             boy.altitude += FLY_UP_SPEED_PPS
         elif event == PUSHDOWN_DOWN:
@@ -93,7 +92,6 @@ class RunState:
             boy.velocity -= FLY_SPEED_PPS
         elif event == LEFT_UP:
             boy.velocity += FLY_SPEED_PPS
-
         if event == PULLUP_DOWN:
             boy.altitude += FLY_UP_SPEED_PPS
         elif event == PUSHDOWN_DOWN:
@@ -102,6 +100,7 @@ class RunState:
             boy.altitude -= FLY_UP_SPEED_PPS
         elif event == PUSHDOWN_UP:
             boy.altitude += FLY_UP_SPEED_PPS
+
         boy.dir = clamp(-1, boy.velocity, 1)
 
     @staticmethod
@@ -158,13 +157,13 @@ next_state_table = {
 class Player:
 
     def __init__(self):
-        self.x, self.y = 1600 // 2, 90
+        self.x, self.y = 0+150, 600 / 2
         # Boy is only once created, so instance image loading is fine
         self.image = load_image('animation_sheet.png')
         self.font = load_font('ENCR10B.TTF', 16)
         self.dir = 1
-        self.velocity = -400
-        self.altitude = 300
+        self.velocity = 0
+        self.altitude = 0
         self.frame = 0
         self.event_que = []
         self.cur_state = IdleState
