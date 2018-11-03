@@ -15,11 +15,11 @@ name = "MainState"
 boy = None
 
 def enter():
-    global boy
-    boy = Player()
+    global player
+    player = Player()
     sky = Sky()
     game_world.add_object(sky, 0)
-    game_world.add_object(boy, 1)
+    game_world.add_object(player, 1)
 
 
 def exit():
@@ -41,7 +41,7 @@ def handle_events():
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
                 game_framework.quit()
         else:
-            boy.handle_event(event)
+            player.handle_event(event)
 
 
 def update():

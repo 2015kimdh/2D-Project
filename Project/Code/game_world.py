@@ -1,8 +1,8 @@
 
 # layer 0: Background Objects
 # layer 1: Foreground Objects
-objects = [[],[]]
-
+# layer 2: Bullet Objects
+objects = [[],[],[],[]]
 
 def add_object(o, layer):
     objects[layer].append(o)
@@ -13,6 +13,8 @@ def remove_object(o):
         if o in objects[i]:
             objects[i].remove(o)
             del o
+
+
 
 
 def clear():

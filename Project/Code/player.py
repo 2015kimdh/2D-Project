@@ -82,7 +82,6 @@ class RunState:
         player.x += player.velocity * game_framework.frame_time
         player.y += player.altitude * game_framework.frame_time
         player.shottime = get_time()
-        print(player.shottime)
         if player.armed == 1 and player.shottime % player.bullet_load >= 0.01:
             player.player_fire_bullet()
 
@@ -118,8 +117,7 @@ class Player:
 
     def player_fire_bullet(self):
         pbullet = P_Bullet(self.x, self.y, self.dir*15)
-        game_world.add_object(pbullet, 1)
-
+        game_world.add_object(pbullet, 2)
 
     def add_event(self, event):
         self.event_que.insert(0, event)
