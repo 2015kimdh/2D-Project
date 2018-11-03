@@ -7,7 +7,7 @@ class P_Bullet:
     def __init__(self, x = 400, y = 300, velocity = 1):
         if P_Bullet.image == None:
             P_Bullet.image = load_image('jet.png')
-        self.x, self.y, self.velocity = x, y, velocity
+        self.x, self.y, self.velocity = x + 50, y-10, velocity
 
     def draw(self):
         self.image.clip_draw(630, 0, 60, 20, self.x, self.y)

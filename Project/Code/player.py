@@ -23,14 +23,15 @@ FRAMES_PER_ACTION = 8
 
 
 # Boy Event
-RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP, PULLUP_DOWN, PULLUP_UP, PUSHDOWN_DOWN, PUSHDOWN_UP, SLEEP_TIMER, SPACE = range(10)
+RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP, PULLUP_DOWN, PULLUP_UP, PUSHDOWN_DOWN, PUSHDOWN_UP, SLEEP_TIMER, BULLET_UP, BULLET_DOWN = range(11)
 
 key_event_table = {
     (SDL_KEYDOWN, SDLK_RIGHT): RIGHT_DOWN,
     (SDL_KEYDOWN, SDLK_LEFT): LEFT_DOWN,
     (SDL_KEYUP, SDLK_RIGHT): RIGHT_UP,
     (SDL_KEYUP, SDLK_LEFT): LEFT_UP,
-    (SDL_KEYDOWN, SDLK_SPACE): SPACE,
+    (SDL_KEYUP, SDLK_z): BULLET_UP,
+    (SDL_KEYDOWN, SDLK_z): BULLET_DOWN,
     (SDL_KEYDOWN, SDLK_UP): PULLUP_DOWN,
     (SDL_KEYDOWN, SDLK_DOWN): PUSHDOWN_DOWN,
     (SDL_KEYUP, SDLK_UP): PULLUP_UP,
@@ -44,89 +45,70 @@ key_event_table = {
 class RunState:
 
     @staticmethod
-    def enter(boy, event):
+    def enter(player, event):
         if event == RIGHT_DOWN:
-            boy.velocity += FLY_SPEED_PPS
+            player.velocity += FLY_SPEED_PPS
         elif event == LEFT_DOWN:
-            boy.velocity -= FLY_SPEED_PPS
+            player.velocity -= FLY_SPEED_PPS
         elif event == RIGHT_UP:
-            boy.velocity -= FLY_SPEED_PPS
+            player.velocity -= FLY_SPEED_PPS
         elif event == LEFT_UP:
-            boy.velocity += FLY_SPEED_PPS
+            player.velocity += FLY_SPEED_PPS
 
         if event == PULLUP_DOWN:
-            boy.altitude += FLY_UP_SPEED_PPS
+            player.altitude += FLY_UP_SPEED_PPS
         elif event == PUSHDOWN_DOWN:
-            boy.altitude -= FLY_UP_SPEED_PPS
+            player.altitude -= FLY_UP_SPEED_PPS
         elif event == PULLUP_UP:
-            boy.altitude -= FLY_UP_SPEED_PPS
+            player.altitude -= FLY_UP_SPEED_PPS
         elif event == PUSHDOWN_UP:
-            boy.altitude += FLY_UP_SPEED_PPS
+            player.altitude += FLY_UP_SPEED_PPS
 
-        boy.dir = clamp(-1, boy.velocity, 1)
+        if event == BULLET_DOWN:
+            player.armed = 1
+        elif event == BULLET_UP:
+            player.armed = 0
+
+        player.dir = 1
 
 
     @staticmethod
-    def exit(boy, event):
-        if event == SPACE:
-            boy.player_fire_bullet()
-
-    @staticmethod
-    def do(boy):
-        boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
-        boy.x += boy.velocity * game_framework.frame_time
-        boy.y += boy.altitude * game_framework.frame_time
-
-    @staticmethod
-    def draw(boy):
-        if boy.dir == 1:
-            boy.image.clip_draw(int(boy.frame) * 100, 100, 100, 100, boy.x, boy.y)
-        else:
-            boy.image.clip_draw(int(boy.frame) * 100, 0, 100, 100, boy.x, boy.y)
-
-
-class SleepState:
-
-    @staticmethod
-    def enter(boy, event):
-        boy.frame = 0
-        boy.angle = 0
-    @staticmethod
-    def exit(boy, event):
+    def exit(player, event):
         pass
 
     @staticmethod
-    def do(boy):
-        boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
-        boy.angle = (boy.angle + 12)%360
-        boy.gimage.opacify(random.randint(1,10)*0.1)
+    def do(player):
+        player.frame = (player.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
+        player.x += player.velocity * game_framework.frame_time
+        player.y += player.altitude * game_framework.frame_time
+        player.shottime = get_time()
+        print(player.shottime)
+        if player.armed == 1 and player.shottime % player.bullet_load >= 0.01:
+            player.player_fire_bullet()
 
     @staticmethod
-    def draw(boy):
-        if boy.dir == 1:
-            boy.image.clip_composite_draw(int(boy.frame) * 100, 300, 100, 100, 3.141592 / 2, '', boy.x - 25, boy.y - 25, 100, 100)
-        else:
-            boy.image.clip_composite_draw(int(boy.frame) * 100, 200, 100, 100, -3.141592 / 2, '', boy.x + 25, boy.y - 25, 100, 100)
-        boy.gimage.clip_draw(int(boy.frame) * 100, 200, 100, 100, boy.x + 100 * math.cos(math.radians(boy.angle)), boy.y + 100 * math.sin(math.radians(boy.angle)))
-
-
+    def draw(player):
+            player.image.clip_draw(0, int(player.frame) * 85, 370, 85, player.x, player.y, 185, 42.5)
 
 
 next_state_table = {
-    RunState: {PUSHDOWN_DOWN : RunState, PUSHDOWN_UP : RunState, PULLUP_DOWN : RunState, PULLUP_UP : RunState, RIGHT_UP: RunState, LEFT_UP: RunState, LEFT_DOWN: RunState, RIGHT_DOWN: RunState, SPACE: RunState}
+    RunState: {PUSHDOWN_DOWN : RunState, PUSHDOWN_UP : RunState, PULLUP_DOWN : RunState, PULLUP_UP : RunState, RIGHT_UP: RunState, LEFT_UP: RunState, LEFT_DOWN: RunState, RIGHT_DOWN: RunState, BULLET_DOWN: RunState, BULLET_UP: RunState}
 }
 
 class Player:
 
     def __init__(self):
-        self.x, self.y = 0+150, 600 / 2
+        self.x, self.y = 0+150, 800 / 2
         # Boy is only once created, so instance image loading is fine
-        self.image = load_image('animation_sheet.png')
+        self.image = load_image('jet.png')
         self.font = load_font('ENCR10B.TTF', 16)
         self.dir = 1
         self.velocity = 0
         self.altitude = 0
+        self.armed = 0
         self.frame = 0
+        self.shottime = 0
+        self.bullet_load = 0.015
         self.event_que = []
         self.cur_state = RunState
         self.cur_state.enter(self, None)
@@ -135,7 +117,7 @@ class Player:
 
 
     def player_fire_bullet(self):
-        pbullet = P_Bullet(self.x, self.y, self.dir*3)
+        pbullet = P_Bullet(self.x, self.y, self.dir*15)
         game_world.add_object(pbullet, 1)
 
 
