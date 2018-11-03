@@ -34,50 +34,11 @@ key_event_table = {
     (SDL_KEYDOWN, SDLK_UP): PULLUP_DOWN,
     (SDL_KEYDOWN, SDLK_DOWN): PUSHDOWN_DOWN,
     (SDL_KEYUP, SDLK_UP): PULLUP_UP,
-    (SDL_KEYUP, SDLK_DOWN): PUSHDOWN_UP,
+    (SDL_KEYUP, SDLK_DOWN): PUSHDOWN_UP
 }
 
 
 # Boy States
-
-class IdleState:
-
-    @staticmethod
-    def enter(boy, event):
-        if event == RIGHT_DOWN:
-            boy.velocity += FLY_SPEED_PPS
-        elif event == LEFT_DOWN:
-            boy.velocity -= FLY_SPEED_PPS
-        elif event == RIGHT_UP:
-            boy.velocity -= FLY_SPEED_PPS
-        elif event == LEFT_UP:
-            boy.velocity += FLY_SPEED_PPS
-        if event == PULLUP_DOWN:
-            boy.altitude += FLY_UP_SPEED_PPS
-        elif event == PUSHDOWN_DOWN:
-            boy.altitude -= FLY_UP_SPEED_PPS
-        elif event == PULLUP_UP:
-            boy.altitude -= FLY_UP_SPEED_PPS
-        elif event == PUSHDOWN_UP:
-            boy.altitude += FLY_UP_SPEED_PPS
-        boy.timer = get_time()
-
-    @staticmethod
-    def exit(boy, event):
-        if event == SPACE:
-            boy.player_fire_bullet()
-        pass
-
-    @staticmethod
-    def do(boy):
-        boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
-
-    @staticmethod
-    def draw(boy):
-        if boy.dir == 1:
-            boy.image.clip_draw(int(boy.frame) * 100, 300, 100, 100, boy.x, boy.y)
-        else:
-            boy.image.clip_draw(int(boy.frame) * 100, 200, 100, 100, boy.x, boy.y)
 
 
 class RunState:
@@ -92,6 +53,7 @@ class RunState:
             boy.velocity -= FLY_SPEED_PPS
         elif event == LEFT_UP:
             boy.velocity += FLY_SPEED_PPS
+
         if event == PULLUP_DOWN:
             boy.altitude += FLY_UP_SPEED_PPS
         elif event == PUSHDOWN_DOWN:
@@ -102,6 +64,7 @@ class RunState:
             boy.altitude += FLY_UP_SPEED_PPS
 
         boy.dir = clamp(-1, boy.velocity, 1)
+
 
     @staticmethod
     def exit(boy, event):
@@ -150,8 +113,7 @@ class SleepState:
 
 
 next_state_table = {
-    IdleState: {PUSHDOWN_DOWN : RunState, PUSHDOWN_UP : RunState, PULLUP_DOWN : RunState, PULLUP_UP : RunState, RIGHT_UP: RunState, LEFT_UP: RunState, RIGHT_DOWN: RunState, LEFT_DOWN: RunState, SPACE: IdleState},
-    RunState: {PUSHDOWN_DOWN : IdleState, PUSHDOWN_UP : IdleState, PULLUP_DOWN : IdleState, PULLUP_UP : IdleState, RIGHT_UP: IdleState, LEFT_UP: IdleState, LEFT_DOWN: IdleState, RIGHT_DOWN: IdleState, SPACE: RunState}
+    RunState: {PUSHDOWN_DOWN : RunState, PUSHDOWN_UP : RunState, PULLUP_DOWN : RunState, PULLUP_UP : RunState, RIGHT_UP: RunState, LEFT_UP: RunState, LEFT_DOWN: RunState, RIGHT_DOWN: RunState, SPACE: RunState}
 }
 
 class Player:
@@ -166,7 +128,7 @@ class Player:
         self.altitude = 0
         self.frame = 0
         self.event_que = []
-        self.cur_state = IdleState
+        self.cur_state = RunState
         self.cur_state.enter(self, None)
         self.gimage = load_image('animation_sheet.png')
         self.angle = 0
