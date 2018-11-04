@@ -16,7 +16,7 @@ class P_missile:
         self.frame = 0
 
     def draw(self):
-        self.image.clip_draw(473, 387 + int(self.frame) * 50, 200, 50, self.x, self.y, 100, 25)
+        self.image.clip_draw(473, 380 + int(self.frame) * 52, 200, 50, self.x, self.y, 100, 25)
 
     def update(self):
         self.x = (1 - self.time / 100)*(1 - self.time / 100)*self.sx + 2*(1 - self.time / 100)*(self.time / 100)*(self.sx + self.dx - 1800) + (self.time / 100)*(self.time / 100)*self.dx
