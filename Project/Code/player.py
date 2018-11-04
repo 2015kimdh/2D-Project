@@ -134,6 +134,7 @@ class Player:
             elif sky.night == 1:
                 sky.night = 0
 
+
     def player_fire_bullet(self):
         pbullet = P_Bullet(self.x, self.y, self.dir*15)
         game_world.add_object(pbullet, 1)
