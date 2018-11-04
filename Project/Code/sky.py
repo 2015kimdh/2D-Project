@@ -13,7 +13,6 @@ class Sky:
     def update(self):
         self.x = self.x % 3200 + 10
         self.sx = self.sx % 3200 + 10
-
     def draw(self):
         if self.night == 0:
             self.image.clip_draw(0, 0, 1600, 800, -(self.x)+800, self.y, 1600, 800)

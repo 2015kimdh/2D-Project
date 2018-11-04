@@ -3,9 +3,10 @@ from pico2d import *
 from bullet import P_Bullet
 from missile import P_missile
 from sky import Sky
-import random
 
+import random
 import game_world
+
 
 # Boy Run Speed
 # fill expressions correctly
@@ -21,7 +22,6 @@ FLY_UP_SPEED_PPS = (FLY_SPEED_MPS * PIXEL_PER_METER)
 TIME_PER_ACTION = 0.5
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
 FRAMES_PER_ACTION = 8
-
 
 
 # Boy Event
@@ -116,29 +116,36 @@ class Player:
         self.armed = 0
         self.frame = 0
         self.shottime = 0
+        self.sound = load_wav('50CalMachineGun.wav')
+        self.msound = load_music('Grenade.mp3')
         self.bullet_load = 0.015
         self.event_que = []
         self.cur_state = RunState
         self.cur_state.enter(self, None)
         self.gimage = load_image('animation_sheet.png')
         self.angle = 0
+        self.sound.set_volume(20)
+        self.msound.set_volume(30)
 
     def map_change(self):
-        sky = Sky()
-        if sky.night == 0:
-            sky.night = 1
-        else:
-            sky.night = 0
-        game_world.add_object(sky, 0)
+        for sky in game_world.get_sky():
+            if sky.night == 0:
+                sky.night = 1
+            elif sky.night == 1:
+                sky.night = 0
 
     def player_fire_bullet(self):
         pbullet = P_Bullet(self.x, self.y, self.dir*15)
-        game_world.add_object(pbullet, 3)
+        game_world.add_object(pbullet, 1)
+        soundtime = get_time()
+        if soundtime % 0.4 < 0.2 and soundtime % 0.4 > 0.17:
+            self.sound.play()
 
 
     def player_fire_missile(self):
         pmissile = P_missile(self.x, self.y)
-        game_world.add_object(pmissile, 3)
+        game_world.add_object(pmissile, 1)
+        self.msound.play()
 
     def add_event(self, event):
         self.event_que.insert(0, event)
@@ -153,7 +160,6 @@ class Player:
 
     def draw(self):
         self.cur_state.draw(self)
-        self.font.draw(self.x - 60, self.y + 50, '(Time: %3.2f)' % get_time(), (255, 255, 0))
 
     def handle_event(self, event):
         if (event.type, event.key) in key_event_table:

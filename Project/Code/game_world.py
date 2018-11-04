@@ -2,7 +2,7 @@
 # layer 0: Background Objects
 # layer 1: Foreground Objects
 # layer 2: Bullet Objects
-objects = [[],[],[],[]]
+objects = [[],[]]
 
 def add_object(o, layer):
     objects[layer].append(o)
@@ -28,3 +28,6 @@ def all_objects():
         for o in objects[i]:
             yield o
 
+def get_sky():
+    for o in objects[0]:
+        yield o
