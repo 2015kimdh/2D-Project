@@ -2,6 +2,7 @@ import game_framework
 from pico2d import *
 from bullet import P_Bullet
 from missile import P_missile
+from sky import Sky
 import random
 
 import game_world
@@ -24,7 +25,7 @@ FRAMES_PER_ACTION = 8
 
 
 # Boy Event
-RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP, PULLUP_DOWN, PULLUP_UP, PUSHDOWN_DOWN, PUSHDOWN_UP, SLEEP_TIMER, BULLET_UP, BULLET_DOWN, MISSILE_DOWN = range(12)
+RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP, PULLUP_DOWN, PULLUP_UP, PUSHDOWN_DOWN, PUSHDOWN_UP, SLEEP_TIMER, BULLET_UP, BULLET_DOWN, MISSILE_DOWN, MAP_CHANGE = range(13)
 
 key_event_table = {
     (SDL_KEYDOWN, SDLK_RIGHT): RIGHT_DOWN,
@@ -37,7 +38,8 @@ key_event_table = {
     (SDL_KEYDOWN, SDLK_DOWN): PUSHDOWN_DOWN,
     (SDL_KEYUP, SDLK_UP): PULLUP_UP,
     (SDL_KEYUP, SDLK_DOWN): PUSHDOWN_UP,
-    (SDL_KEYDOWN, SDLK_x): MISSILE_DOWN
+    (SDL_KEYDOWN, SDLK_x): MISSILE_DOWN,
+    (SDL_KEYDOWN, SDLK_q): MAP_CHANGE
 }
 
 
@@ -72,6 +74,8 @@ class RunState:
             player.armed = 0
         if event == MISSILE_DOWN:
             player.player_fire_missile()
+        if event == MAP_CHANGE:
+            player.map_change()
 
         player.dir = 1
 
@@ -95,7 +99,9 @@ class RunState:
 
 
 next_state_table = {
-    RunState: {PUSHDOWN_DOWN : RunState, PUSHDOWN_UP : RunState, PULLUP_DOWN : RunState, PULLUP_UP : RunState, RIGHT_UP: RunState, LEFT_UP: RunState, LEFT_DOWN: RunState, RIGHT_DOWN: RunState, BULLET_DOWN: RunState, BULLET_UP: RunState, MISSILE_DOWN: RunState}}
+    RunState: {PUSHDOWN_DOWN : RunState, PUSHDOWN_UP : RunState, PULLUP_DOWN : RunState, PULLUP_UP : RunState, RIGHT_UP: RunState, LEFT_UP: RunState, LEFT_DOWN: RunState,
+               RIGHT_DOWN: RunState, BULLET_DOWN: RunState, BULLET_UP: RunState, MISSILE_DOWN: RunState,
+               MAP_CHANGE : RunState}}
 
 class Player:
 
@@ -117,6 +123,13 @@ class Player:
         self.gimage = load_image('animation_sheet.png')
         self.angle = 0
 
+    def map_change(self):
+        sky = Sky()
+        if sky.night == 0:
+            sky.night = 1
+        else:
+            sky.night = 0
+        game_world.add_object(sky, 0)
 
     def player_fire_bullet(self):
         pbullet = P_Bullet(self.x, self.y, self.dir*15)
