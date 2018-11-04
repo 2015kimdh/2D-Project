@@ -117,7 +117,7 @@ class Player:
 
     def player_fire_bullet(self):
         pbullet = P_Bullet(self.x, self.y, self.dir*15)
-        game_world.add_object(pbullet, 2)
+        game_world.add_object(pbullet, 3)
 
     def add_event(self, event):
         self.event_que.insert(0, event)
