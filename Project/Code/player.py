@@ -1,6 +1,7 @@
 import game_framework
 from pico2d import *
 from bullet import P_Bullet
+from missile import P_missile
 import random
 
 import game_world
@@ -118,6 +119,8 @@ class Player:
     def player_fire_bullet(self):
         pbullet = P_Bullet(self.x, self.y, self.dir*15)
         game_world.add_object(pbullet, 3)
+        pmissile = P_missile(self.x, self.y, self.dir * 15)
+        game_world.add_object(pmissile, 3)
 
     def add_event(self, event):
         self.event_que.insert(0, event)
