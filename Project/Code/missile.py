@@ -4,10 +4,10 @@ import game_world
 class P_missile:
     image = None
 
-    def __init__(self, x = 400, y = 300, velocity = 1):
+    def __init__(self, x = 400, y = 300):
         if P_missile.image == None:
             P_missile.image = load_image('jet.png')
-        self.x, self.y, self.velocity = x + 50, y-10, velocity
+        self.x, self.y = x + 50, y-10
         self.sx, self.sy = x, y-20
         self.dx, self.dy = 1400, y-10
         self.time = 0
@@ -16,7 +16,7 @@ class P_missile:
         self.image.clip_draw(630, 0, 60, 20, self.x, self.y)
 
     def update(self):
-        self.x = (1 - self.time / 100)*(1 - self.time / 100)*self.sx + 2*(1 - self.time / 100)*(self.time / 100)*(self.sx + self.dx - 1600) + (self.time / 100)*(self.time / 100)*self.dx
+        self.x = (1 - self.time / 100)*(1 - self.time / 100)*self.sx + 2*(1 - self.time / 100)*(self.time / 100)*(self.sx + self.dx - 1800) + (self.time / 100)*(self.time / 100)*self.dx
         self.y = (1 - self.time / 100)*(1 - self.time / 100)*self.sy + 2*(1 - self.time / 100)*(self.time / 100)*(self.sy + self.dy-500) + (self.time / 100)*(self.time / 100)*self.dy
         self.time += 1
 

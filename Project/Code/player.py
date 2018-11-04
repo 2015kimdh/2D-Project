@@ -24,7 +24,7 @@ FRAMES_PER_ACTION = 8
 
 
 # Boy Event
-RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP, PULLUP_DOWN, PULLUP_UP, PUSHDOWN_DOWN, PUSHDOWN_UP, SLEEP_TIMER, BULLET_UP, BULLET_DOWN = range(11)
+RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP, PULLUP_DOWN, PULLUP_UP, PUSHDOWN_DOWN, PUSHDOWN_UP, SLEEP_TIMER, BULLET_UP, BULLET_DOWN, MISSILE_DOWN = range(12)
 
 key_event_table = {
     (SDL_KEYDOWN, SDLK_RIGHT): RIGHT_DOWN,
@@ -36,7 +36,8 @@ key_event_table = {
     (SDL_KEYDOWN, SDLK_UP): PULLUP_DOWN,
     (SDL_KEYDOWN, SDLK_DOWN): PUSHDOWN_DOWN,
     (SDL_KEYUP, SDLK_UP): PULLUP_UP,
-    (SDL_KEYUP, SDLK_DOWN): PUSHDOWN_UP
+    (SDL_KEYUP, SDLK_DOWN): PUSHDOWN_UP,
+    (SDL_KEYDOWN, SDLK_x): MISSILE_DOWN
 }
 
 
@@ -69,6 +70,8 @@ class RunState:
             player.armed = 1
         elif event == BULLET_UP:
             player.armed = 0
+        if event == MISSILE_DOWN:
+            player.player_fire_missile()
 
         player.dir = 1
 
@@ -92,8 +95,7 @@ class RunState:
 
 
 next_state_table = {
-    RunState: {PUSHDOWN_DOWN : RunState, PUSHDOWN_UP : RunState, PULLUP_DOWN : RunState, PULLUP_UP : RunState, RIGHT_UP: RunState, LEFT_UP: RunState, LEFT_DOWN: RunState, RIGHT_DOWN: RunState, BULLET_DOWN: RunState, BULLET_UP: RunState}
-}
+    RunState: {PUSHDOWN_DOWN : RunState, PUSHDOWN_UP : RunState, PULLUP_DOWN : RunState, PULLUP_UP : RunState, RIGHT_UP: RunState, LEFT_UP: RunState, LEFT_DOWN: RunState, RIGHT_DOWN: RunState, BULLET_DOWN: RunState, BULLET_UP: RunState, MISSILE_DOWN: RunState}}
 
 class Player:
 
@@ -119,7 +121,10 @@ class Player:
     def player_fire_bullet(self):
         pbullet = P_Bullet(self.x, self.y, self.dir*15)
         game_world.add_object(pbullet, 3)
-        pmissile = P_missile(self.x, self.y, self.dir * 15)
+
+
+    def player_fire_missile(self):
+        pmissile = P_missile(self.x, self.y)
         game_world.add_object(pmissile, 3)
 
     def add_event(self, event):
