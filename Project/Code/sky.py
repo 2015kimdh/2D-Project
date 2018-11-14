@@ -2,8 +2,8 @@ from pico2d import *
 
 class Sky:
     def __init__(self):
-        self.image = load_image('cloud.png')
-        self.image2 = load_image('cloud_1.png')
+        self.image = load_image('cloud.png')   #밝은 하늘
+        self.image2 = load_image('cloud_1.png')    #저녁 노을
         self.x = 0
         self.y = 400
         self.sx = 0
