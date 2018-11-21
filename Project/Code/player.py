@@ -150,8 +150,10 @@ class Player:
 
 
     def player_fire_bullet(self):
-        main_state.pbullet = [P_Bullet(self.x, self.y, self.dir*15)]
-        game_world.add_object(main_state.pbullet, 1)
+        bullet = P_Bullet(self.x, self.y, self.dir*15)
+        main_state.pbullet.append(P_Bullet(self.x, self.y, self.dir*15))
+        #main_state.pbullet = P_Bullet(self.x, self.y, self.dir*15)
+        game_world.add_object(bullet, 1)
 
         soundtime = get_time()
         if soundtime % 0.4 < 0.2 and soundtime % 0.4 > 0.17:
@@ -159,7 +161,6 @@ class Player:
 
 
     def player_fire_missile(self):
-        global pmissile
         pmissile = [P_missile(self.x, self.y)]
         game_world.add_object(pmissile, 1)
         self.msound.play()

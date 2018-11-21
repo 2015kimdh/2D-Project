@@ -20,7 +20,6 @@ def enter():
     player = Player()
     sky = Sky()
 
-
     game_world.add_object(sky, 0)
     game_world.add_object(player, 1)
 
@@ -61,8 +60,10 @@ def update():
     for game_object in game_world.all_objects():
         game_object.update()
     for P_Bullet in pbullet:
-        if collide(Player, pbullet):
+        if collide(player, P_Bullet):
             print("COLLISION")
+            pbullet.remove(P_Bullet)
+            game_world.remove_object(P_Bullet)
     # fill here
 
 
