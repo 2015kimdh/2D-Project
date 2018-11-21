@@ -87,8 +87,20 @@ class RunState:
     @staticmethod
     def do(player):
         player.frame = (player.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
-        player.x += player.velocity * game_framework.frame_time
-        player.y += player.altitude * game_framework.frame_time
+        if player.velocity > 0:
+            if player.x < 1550 - player.velocity * game_framework.frame_time:
+                player.x += player.velocity * game_framework.frame_time
+        if player.velocity < 0:
+            if player.x > 50 + player.velocity * game_framework.frame_time:
+                player.x += player.velocity * game_framework.frame_time
+
+        if player.altitude > 0:
+            if player.y < 780 - player.velocity * game_framework.frame_time:
+                player.y += player.altitude * game_framework.frame_time
+        if player.altitude < 0:
+            if player.y > 30 + player.altitude * game_framework.frame_time:
+                player.y += player.altitude * game_framework.frame_time
+
         player.shottime = get_time()
         if player.armed == 1 and player.shottime % player.bullet_load >= 0.01:
             player.player_fire_bullet()
