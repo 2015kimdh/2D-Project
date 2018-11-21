@@ -63,7 +63,11 @@ def update():
         if collide(player, P_Bullet):
             print("COLLISION")
             pbullet.remove(P_Bullet)
+    for P_Bullet in game_world.objects[1]:
+        if collide(player, P_Bullet) and P_Bullet.state == 1:
+            print("COLLISION")
             game_world.remove_object(P_Bullet)
+
     # fill here
 
 

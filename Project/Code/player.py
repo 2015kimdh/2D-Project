@@ -140,6 +140,7 @@ class Player:
         self.angle = 0
         self.sound.set_volume(20)
         self.msound.set_volume(30)
+        self.state = 0
 
     def map_change(self):
         for sky in game_world.get_sky():

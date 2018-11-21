@@ -8,6 +8,7 @@ class P_Bullet:
         if P_Bullet.image == None:
             P_Bullet.image = load_image('jet.png')
         self.x, self.y, self.velocity = x + 50, y-10, velocity
+        self.state = 1
 
 
     def draw(self):
