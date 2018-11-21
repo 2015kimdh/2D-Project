@@ -12,6 +12,7 @@ class P_Bullet:
 
     def draw(self):
         self.image.clip_draw(630, 0, 60, 20, self.x, self.y)
+        draw_rectangle(*self.get_bb())
 
     def update(self):
         self.x += self.velocity
@@ -21,4 +22,4 @@ class P_Bullet:
 
     def get_bb(self):  # 충돌체크용 좌표 받아오기
         # fill here
-        return self.x - 20, self.y - 10, self.x + 20, self.y + 10
+        return self.x - 20, self.y - 10, self.x + 30, self.y + 10

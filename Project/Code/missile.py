@@ -17,6 +17,7 @@ class P_missile:
 
     def draw(self):
         self.image.clip_draw(473, 380 + int(self.frame) * 52, 200, 50, self.x, self.y, 100, 25)
+        draw_rectangle(*self.get_bb())
 
     def update(self):   # 스플라인 곡선 그리기
         self.x = (1 - self.time / 100)*(1 - self.time / 100)*self.sx + 2*(1 - self.time / 100)*(self.time / 100)*(self.sx + self.dx - 1800) + (self.time / 100)*(self.time / 100)*self.dx
@@ -29,4 +30,4 @@ class P_missile:
 
     def get_bb(self):
         # fill here
-        return self.x - 10, self.y - 10, self.x + 10, self.y + 10   #위치 좌표 받아오기
+        return self.x - 20, self.y - 10, self.x + 40, self.y + 10   #위치 좌표 받아오기
