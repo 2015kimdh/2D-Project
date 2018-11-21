@@ -10,8 +10,8 @@ import game_world
 
 # Boy Run Speed
 # fill expressions correctly
-PIXEL_PER_METER = (10.0 / 6.0)
-FLY_SPEED_KMPH = 1200.0
+PIXEL_PER_METER = (10.0 / 0.6) # 10 pix 60cm
+FLY_SPEED_KMPH = 120.0
 FLY_SPEED_MPM = (FLY_SPEED_KMPH * 1000.0 / 60.0)
 FLY_SPEED_MPS = (FLY_SPEED_MPM / 60.0)
 FLY_SPEED_PPS = (FLY_SPEED_MPS * PIXEL_PER_METER)
@@ -108,6 +108,7 @@ class RunState:
     @staticmethod
     def draw(player):
             player.image.clip_draw(0, int(player.frame) * 85, 370, 85, player.x, player.y, 185, 42.5)
+            draw_rectangle(*player.get_bb())
 
 
 next_state_table = {
@@ -179,3 +180,6 @@ class Player:
             key_event = key_event_table[(event.type, event.key)]
             self.add_event(key_event)
 
+    def get_bb(self):  # 충돌체크용 좌표 받아오기
+        # fill here
+        return self.x - PIXEL_PER_METER*3, self.y - PIXEL_PER_METER*1.2, self.x + PIXEL_PER_METER*4.5, self.y + PIXEL_PER_METER*0.5
