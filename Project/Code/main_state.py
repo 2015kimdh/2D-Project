@@ -8,16 +8,19 @@ import game_world
 
 from player import Player
 from sky import Sky
-
+from bullet import P_Bullet
 
 name = "MainState"
 
 boy = None
+pbullet = []
 
 def enter():
     global player
     player = Player()
     sky = Sky()
+
+
     game_world.add_object(sky, 0)
     game_world.add_object(player, 1)
 
@@ -57,6 +60,9 @@ def handle_events():
 def update():
     for game_object in game_world.all_objects():
         game_object.update()
+    for P_Bullet in pbullet:
+        if collide(Player, pbullet):
+            print("COLLISION")
     # fill here
 
 

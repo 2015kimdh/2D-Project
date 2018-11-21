@@ -1,4 +1,5 @@
 import game_framework
+import main_state
 from pico2d import *
 from bullet import P_Bullet
 from missile import P_missile
@@ -149,15 +150,17 @@ class Player:
 
 
     def player_fire_bullet(self):
-        pbullet = P_Bullet(self.x, self.y, self.dir*15)
-        game_world.add_object(pbullet, 1)
+        main_state.pbullet = [P_Bullet(self.x, self.y, self.dir*15)]
+        game_world.add_object(main_state.pbullet, 1)
+
         soundtime = get_time()
         if soundtime % 0.4 < 0.2 and soundtime % 0.4 > 0.17:
             self.sound.play()
 
 
     def player_fire_missile(self):
-        pmissile = P_missile(self.x, self.y)
+        global pmissile
+        pmissile = [P_missile(self.x, self.y)]
         game_world.add_object(pmissile, 1)
         self.msound.play()
 
