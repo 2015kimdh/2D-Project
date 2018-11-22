@@ -6,6 +6,7 @@ from pico2d import *
 import game_framework
 import game_world
 
+from enemy import Enemy
 from player import Player
 from sky import Sky
 from bullet import P_Bullet
@@ -20,8 +21,13 @@ def enter():
     player = Player()
     sky = Sky()
 
+    global enemy
+    enemy = Enemy()
+
+
     game_world.add_object(sky, 0)
     game_world.add_object(player, 1)
+    game_world.add_object(enemy, 1)
 
 
 def exit():
@@ -60,11 +66,11 @@ def update():
     for game_object in game_world.all_objects():
         game_object.update()
     for P_Bullet in pbullet:
-        if collide(player, P_Bullet):
+        if collide(enemy, P_Bullet):
             print("COLLISION")
             pbullet.remove(P_Bullet)
     for P_Bullet in game_world.objects[1]:
-        if collide(player, P_Bullet) and P_Bullet.state == 1:
+        if collide(enemy, P_Bullet) and P_Bullet.state == 1:
             print("COLLISION")
             game_world.remove_object(P_Bullet)
 

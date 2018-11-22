@@ -162,7 +162,7 @@ class Player:
 
 
     def player_fire_missile(self):
-        pmissile = [P_missile(self.x, self.y)]
+        pmissile = P_missile(self.x, self.y)
         game_world.add_object(pmissile, 1)
         self.msound.play()
 
