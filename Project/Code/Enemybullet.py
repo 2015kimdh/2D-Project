@@ -1,20 +1,14 @@
 from pico2d import *
 import game_world
-import random
 
-class Enemy:
-    Type_one_starting_point_x = 1200
-    Type_one_starting_point_y = -200
+class Enmey_Bullet:
     image = None
     sound = None
-    def __init__(self, x = 400, y = 300, velocity = 1):
-        if Enemy.image == None:
-            Enemy.image = load_image('jet.png')
-        self.identity = random.randint(1,5)
-
-        if self.identity == 1:
-            self.x, self.y, self.velocity = x + 50, y-10, velocity
-            self.state = 1
+    def __init__(self, x = 400, y = 300, velocity = -1):
+        if Enmey_Bullet.image == None:
+            Enmey_Bullet.image = load_image('jet.png')
+        self.x, self.y, self.velocity = x + 50, y-10, velocity
+        self.state = 1
 
 
     def draw(self):
