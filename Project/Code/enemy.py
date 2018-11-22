@@ -6,7 +6,7 @@ class Enemy:
 
     image = None
     sound = None
-    def __init__(self, x = 0, y = 0, velocity = 1):
+    def __init__(self):
         self.Type_one_starting_point_x = 1200
         self.Type_one_starting_point_y = 400
         if Enemy.image == None:
@@ -14,8 +14,8 @@ class Enemy:
         self.identity = 1
 
         if self.identity == 1:
-            self.x, self.y, self.velocity = self.Type_one_starting_point_x, self.Type_one_starting_point_y, velocity
-            self.state = 1
+            self.x, self.y, self.velocity = self.Type_one_starting_point_x, self.Type_one_starting_point_y, 1
+            self.state = 2
             self.Hp = 2
 
 
@@ -27,12 +27,9 @@ class Enemy:
         if self.identity == 1:
             pass
 
-        if self.x < 25 or self.x > 1600 - 25:
-            game_world.remove_object(self)
-
     def reduce_Hp(self):
         self.Hp -= 0
 
     def get_bb(self):  # 충돌체크용 좌표 받아오기
         # fill here
-        return self.x - 20, self.y - 10, self.x + 30, self.y + 10
+        return self.x - 50, self.y - 40, self.x + 30, self.y + 10
