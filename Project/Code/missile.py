@@ -14,7 +14,7 @@ class P_missile:
         self.dx, self.dy = 1400, y-10
         self.time = 0
         self.frame = 0
-        self.state = 1
+        self.state = 2
 
     def draw(self):
         self.image.clip_draw(473, 380 + int(self.frame) * 52, 200, 50, self.x, self.y, 100, 25)

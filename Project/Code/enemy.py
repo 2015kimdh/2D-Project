@@ -25,6 +25,7 @@ class Enemy:
 
     def update(self):
         if self.identity == 1:
+            self.x = (self.x % 1200) + 5
             pass
 
     def reduce_Hp(self):

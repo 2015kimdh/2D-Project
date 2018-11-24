@@ -1,0 +1,22 @@
+from pico2d import *
+import game_world
+import random
+
+class Mapcounter:
+
+    image = None
+    sound = None
+    def __init__(self):
+        self.enemycounter = 0
+
+    def add_counter(self):
+        self.enemycounter += 1
+
+    def update(self):
+        if self.identity == 1:
+            self.x = (self.x % 1200) + 5
+            pass
+
+    def get_bb(self):  # 충돌체크용 좌표 받아오기
+        # fill here
+        return self.x - 50, self.y - 40, self.x + 30, self.y + 10
