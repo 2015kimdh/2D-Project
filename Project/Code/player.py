@@ -131,15 +131,15 @@ class Player:
         self.frame = 0
         self.shottime = 0
         self.sound = load_wav('50CalMachineGun.wav')
-        self.msound = load_music('Grenade.mp3')
+        self.missile_sound = load_wav('Grenade.wav')
         self.bullet_load = 0.015
         self.event_que = []
         self.cur_state = RunState
         self.cur_state.enter(self, None)
         self.gimage = load_image('animation_sheet.png')
         self.angle = 0
-        self.sound.set_volume(20)
-        self.msound.set_volume(30)
+        self.sound.set_volume(10)
+        self.missile_sound.set_volume(30)
         self.state = 0
 
     def map_change(self):
@@ -155,16 +155,13 @@ class Player:
         main_state.pbullet.append(P_Bullet(self.x, self.y, self.dir*15))
         #main_state.pbullet = P_Bullet(self.x, self.y, self.dir*15)
         game_world.add_object(bullet, 1)
-
-        soundtime = get_time()
-        if soundtime % 0.4 < 0.2 and soundtime % 0.4 > 0.17:
-            self.sound.play()
+        self.sound.play(1)
 
 
     def player_fire_missile(self):
         pmissile = P_missile(self.x, self.y)
         game_world.add_object(pmissile, 1)
-        self.msound.play()
+        self.missile_sound.play()
 
     def add_event(self, event):
         self.event_que.insert(0, event)
