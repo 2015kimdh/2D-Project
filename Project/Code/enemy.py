@@ -10,7 +10,7 @@ class Enemy:
         self.Type_one_starting_point_x = 1200
         self.Type_one_starting_point_y = 400
         if Enemy.image == None:
-            Enemy.image = load_image('jet.png')
+            Enemy.image = load_image('enemy.png')
         self.identity = 1
 
         if self.identity == 1:
@@ -20,12 +20,13 @@ class Enemy:
 
 
     def draw(self):
-        self.image.clip_draw(630, 0, 60, 20, self.x, self.y)
+        self.image.clip_draw(37, 432, 67, 32, self.x, self.y,60, 50)
         draw_rectangle(*self.get_bb())
 
     def update(self):
         if self.identity == 1:
             self.x = (self.x % 1200) + 5
+            self.y = (self.x % 800) + 5
             pass
 
     def reduce_Hp(self):
@@ -33,4 +34,4 @@ class Enemy:
 
     def get_bb(self):  # 충돌체크용 좌표 받아오기
         # fill here
-        return self.x - 50, self.y - 40, self.x + 30, self.y + 10
+        return self.x - 30, self.y - 20, self.x + 30, self.y + 20

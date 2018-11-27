@@ -136,7 +136,6 @@ class Player:
         self.event_que = []
         self.cur_state = RunState
         self.cur_state.enter(self, None)
-        self.gimage = load_image('animation_sheet.png')
         self.angle = 0
         self.sound.set_volume(10)
         self.missile_sound.set_volume(30)
