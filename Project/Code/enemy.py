@@ -26,6 +26,8 @@ class Enemy:
     def update(self):
         if self.identity == 1:
             self.x = (self.x % 1200) + 5
+            if self.x % 300 == 0:
+
             self.y = (self.x % 800) + 5
             pass
 
