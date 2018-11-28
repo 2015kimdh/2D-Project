@@ -10,7 +10,7 @@ from enemy_1 import Enemy_1
 from player import Player
 from sky import Sky
 from bullet import P_Bullet
-from mapcounter import Mapcounter
+from map_counter import Mapcounter
 
 name = "MainState"
 
@@ -22,12 +22,12 @@ def enter():
     player = Player()
     sky = Sky()
 
-    global enemy1
-    enemy1 = Enemy_1()
+
+    global map_counter
+    map_counter = Mapcounter()
 
 
     game_world.add_object(sky, 0)
-    game_world.add_object(enemy1, 1)
     game_world.add_object(player, 1)
 
 
@@ -67,13 +67,19 @@ def update():
     for game_object in game_world.all_objects():
         game_object.update()
     for P_Bullet in pbullet:
-        if collide(enemy1, P_Bullet):
+        if collide(Enemy_1, P_Bullet):
             print("COLLISION")
             pbullet.remove(P_Bullet)
     for P_Bullet in game_world.objects[1]:
-        if collide(enemy1, P_Bullet) and P_Bullet.state == 1:
+        if collide(Enemy_1, P_Bullet) and P_Bullet.state == 1:
             print("COLLISION")
             game_world.remove_object(P_Bullet)
+            if Enemy_1.state != 3:
+                Enemy_1.reduce_Hp(Enemy_1)
+            if Enemy_1.state == 3:
+                game_world.remove_object(Enemy_1)
+    Mapcounter.spawn_enemy(map_counter)
+
 
     # fill here
 

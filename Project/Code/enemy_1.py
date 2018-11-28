@@ -9,7 +9,7 @@ class Enemy_1:
 
     def __init__(self):
         self.Type_one_starting_point_x = 1200
-        self.Type_one_starting_point_y = -400
+        self.Type_one_starting_point_y = -300
         if Enemy_1.image == None:
             Enemy_1.image = load_image('enemy.png')
             self.time = 0
