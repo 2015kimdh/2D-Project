@@ -10,6 +10,7 @@ from enemy_1 import Enemy_1
 from player import Player
 from sky import Sky
 from bullet import P_Bullet
+from mapcounter import Mapcounter
 
 name = "MainState"
 
