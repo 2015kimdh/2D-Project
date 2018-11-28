@@ -6,7 +6,7 @@ from pico2d import *
 import game_framework
 import game_world
 
-from enemy import Enemy
+from enemy_1 import Enemy_1
 from player import Player
 from sky import Sky
 from bullet import P_Bullet
@@ -22,7 +22,7 @@ def enter():
     sky = Sky()
 
     global enemy1
-    enemy1 = Enemy()
+    enemy1 = Enemy_1()
 
 
     game_world.add_object(sky, 0)
