@@ -77,10 +77,6 @@ def update():
             if collide(Enemy_1, P_Bullet) and P_Bullet.state == 1:
                 print("COLLISION")
                 game_world.remove_object(P_Bullet)
-                if Enemy_1.state != 3:
-                    Enemy_1.reduce_Hp(Enemy_1)
-                if Enemy_1.state == 3:
-                    game_world.remove_object(Enemy_1)
 
 
     # fill here
