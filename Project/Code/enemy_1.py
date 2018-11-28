@@ -8,6 +8,7 @@ class Enemy_1:
     sound = None
 
     def __init__(self):
+
         self.Type_one_starting_point_x = 1200
         self.Type_one_starting_point_y = -300
         if Enemy_1.image == None:
