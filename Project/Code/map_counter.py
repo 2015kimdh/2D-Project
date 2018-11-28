@@ -12,6 +12,7 @@ class Mapcounter:
 
     def update(self):
         self.spawntimer += 1
+        self.spawn_enemy();
 
     def spawn_enemy(self):
         if self.spawntimer % 10 == 0:

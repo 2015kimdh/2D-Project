@@ -73,7 +73,7 @@ def update():
                 print("COLLISION")
                 pbullet.remove(P_Bullet)
     for P_Bullet in game_world.objects[1]:
-        for Enemy_1 in enemy1:
+        for Enemy_1 in game_world.objects[1]:
             if collide(Enemy_1, P_Bullet) and P_Bullet.state == 1:
                 print("COLLISION")
                 game_world.remove_object(P_Bullet)
@@ -81,7 +81,6 @@ def update():
                     Enemy_1.reduce_Hp(Enemy_1)
                 if Enemy_1.state == 3:
                     game_world.remove_object(Enemy_1)
-    Mapcounter.spawn_enemy(map_counter)
 
 
     # fill here
