@@ -9,29 +9,22 @@ class Mapcounter:
         self.phase = 0
         self.spawntimer = 0
 
+    def draw(self):
+        pass
 
     def update(self):
         self.spawntimer += 1
-        enemy = Enemy_1();
-        if self.spawntimer % 10 == 0:
-            if self.phase == 0:
-                main_state.enemy1.append(Enemy_1())
-                game_world.add_object(enemy, 1)
-            elif self.phase == 1:
-                main_state.enemy1.append(Enemy_1())
-                game_world.add_object(enemy, 1)
-            if self.spawntimer == 1000:
-                self.spawntimer = 0
-                self.phase = 1
 
     def spawn_enemy(self):
-        if self.spawntimer % 10 == 0:
+        if self.spawntimer % 100 == 0:
+            enemy = Enemy_1(1200, -400)
             if self.phase == 0:
-                main_state.enemy1.append(Enemy_1())
-                game_world.add_object(Enemy_1, 1)
+                main_state.enemy1.append(enemy)
+                game_world.add_object(enemy, 1)
             elif self.phase == 1:
-                main_state.enemy1.append(Enemy_1())
-                game_world.add_object(Enemy_1, 1)
+                main_state.enemy1.append(enemy)
+                game_world.add_object(enemy, 1)
             if self.spawntimer == 1000:
                 self.spawntimer = 0
                 self.phase = 1
+        self.update()

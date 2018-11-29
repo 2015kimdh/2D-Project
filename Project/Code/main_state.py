@@ -78,6 +78,9 @@ def update():
                 print("COLLISION")
                 game_world.remove_object(P_Bullet)
 
+    Mapcounter.spawn_enemy(map_counter)
+
+
 
     # fill here
 

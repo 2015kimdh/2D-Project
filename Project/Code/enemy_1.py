@@ -7,21 +7,21 @@ class Enemy_1:
     image = None
     sound = None
 
-    def __init__(self):
+    def __init__(self, x, y):
 
-        self.Type_one_starting_point_x = 1200
-        self.Type_one_starting_point_y = 500
+        self.Type_one_starting_point_x = x
+        self.Type_one_starting_point_y = y
         if Enemy_1.image == None:
             Enemy_1.image = load_image('enemy.png')
-            self.time = 0
-            self.x, self.y, self.velocity = self.Type_one_starting_point_x, self.Type_one_starting_point_y, 1
-            self.sx, self.sy = self.x, self.y
-            self.dx, self.dy = self.x - 1200, self.y + 1200
-            self.state = 2
-            self.Hp = 2
-            self.slice = 300
-            self.x_pull = 500
-            self.y_pull = 200
+        self.time = 0
+        self.x, self.y, self.velocity = self.Type_one_starting_point_x, self.Type_one_starting_point_y, 1
+        self.sx, self.sy = self.x, self.y
+        self.dx, self.dy = self.x - 1200, self.y + 1200
+        self.state = 2
+        self.Hp = 2
+        self.slice = 300
+        self.x_pull = 500
+        self.y_pull = 200
 
 
     def draw(self):
@@ -34,7 +34,7 @@ class Enemy_1:
         self.time += 1
         if self.time == self.slice:
             self.time = 0
-        if self.hp == 0:
+        if self.Hp == 0:
             self.state = 3
 
 
