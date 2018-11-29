@@ -1,6 +1,10 @@
 from pico2d import *
 import game_world
 import random
+import math
+from player import Player
+from Enemybullet import Enmey_Bullet
+import main_state
 
 class Enemy_1:
 
@@ -23,7 +27,6 @@ class Enemy_1:
         self.Hp = 5
         self.slice = 300
 
-
     def draw(self):
         self.image.clip_draw(37, 432, 67, 32, self.x, self.y,60, 50)
         draw_rectangle(*self.get_bb())
@@ -37,7 +40,11 @@ class Enemy_1:
         if self.Hp == 0:
             self.state = 3
         if self.time % 80 == 0:
-            
+            anglex = main_state.player.x - self.x;
+            angley = main_state.player.y - self.y;
+            self.angle = math.atan2(anglex,angley)
+            enemybullet = Enmey_Bullet(self.x, self.y, self.angle)
+            game_world.add_object(enemybullet, 1)
 
 
 
