@@ -17,13 +17,14 @@ class Mapcounter:
         self.spawntimer += 1
 
     def spawn_enemy(self):
-        if self.spawntimer % 30 == 0 and self.spawntimer < 150:
-            if self.phase == 0:
+        if self.spawntimer % 30 == 0 and self.spawntimer < 250:
+            if self.phase == 0 and self.type1_counter < 10:
                 enemy = Enemy_1(1200, 1000, 500, -200, 0, -200)
                 game_world.add_object(enemy, 1)
                 enemy = Enemy_1(1200, -200, 500, 200, 0, 800)
                 game_world.add_object(enemy, 1)
-            elif self.phase == 1:
+                self.type1_counter += 2
+            elif self.phase == 1 and self.type1_counter < 10:
                 enemy = Enemy_1(1200, -200, 500, 200, 0, 800)
                 game_world.add_object(enemy, 1)
         if self.spawntimer == 1000:

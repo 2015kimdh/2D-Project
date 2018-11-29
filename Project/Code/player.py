@@ -182,4 +182,4 @@ class Player:
 
     def get_bb(self):  # 충돌체크용 좌표 받아오기
         # fill here
-        return self.x - PIXEL_PER_METER*3, self.y - PIXEL_PER_METER*1.2, self.x + PIXEL_PER_METER*4.5, self.y + PIXEL_PER_METER*0.5
+        return self.x - PIXEL_PER_METER*2, self.y - PIXEL_PER_METER*1.0, self.x + PIXEL_PER_METER*3.5, self.y + PIXEL_PER_METER*0.5
