@@ -15,8 +15,6 @@ from map_counter import Mapcounter
 name = "MainState"
 
 boy = None
-pbullet = []
-enemy1 = []
 
 def enter():
     global player
@@ -67,16 +65,15 @@ def handle_events():
 def update():
     for game_object in game_world.all_objects():
         game_object.update()
-    for P_Bullet in pbullet:
-        for Enemy_1 in enemy1:
-            if collide(Enemy_1, P_Bullet):
-                print("COLLISION")
-                pbullet.remove(P_Bullet)
     for P_Bullet in game_world.objects[1]:
         for Enemy_1 in game_world.objects[1]:
-            if collide(Enemy_1, P_Bullet) and P_Bullet.state == 1:
+            if collide(Enemy_1, P_Bullet) and Enemy_1.state == 2 and P_Bullet.state == 1:
                 print("COLLISION")
                 game_world.remove_object(P_Bullet)
+                if Enemy_1.Hp > 0:
+                    Enemy_1.Hp -=1
+                if Enemy_1.Hp == 0:
+                    game_world.remove_object(Enemy_1)
 
     Mapcounter.spawn_enemy(map_counter)
 

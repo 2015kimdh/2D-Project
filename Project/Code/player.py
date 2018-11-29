@@ -151,7 +151,6 @@ class Player:
 
     def player_fire_bullet(self):
         bullet = P_Bullet(self.x, self.y, self.dir*15)
-        main_state.pbullet.append(P_Bullet(self.x, self.y, self.dir*15))
         #main_state.pbullet = P_Bullet(self.x, self.y, self.dir*15)
         game_world.add_object(bullet, 1)
         self.sound.play()
