@@ -24,6 +24,7 @@ class Enemy_1:
         self.x, self.y, self.velocity = self.Type_one_starting_point_x, self.Type_one_starting_point_y, 1
         self.sx, self.sy = self.x, self.y
         self.state = 2
+        self.type = 1
         self.Hp = 3
         self.slice = 300
 
