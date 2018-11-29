@@ -20,7 +20,7 @@ class Enemy_1:
         self.x, self.y, self.velocity = self.Type_one_starting_point_x, self.Type_one_starting_point_y, 1
         self.sx, self.sy = self.x, self.y
         self.state = 2
-        self.Hp = 2
+        self.Hp = 5
         self.slice = 300
 
 
@@ -36,6 +36,10 @@ class Enemy_1:
             self.time = 0
         if self.Hp == 0:
             self.state = 3
+        if self.time % 80 == 0:
+            
+
+
 
 
     def reduce_Hp(self):

@@ -4,11 +4,11 @@ import game_world
 class Enmey_Bullet:
     image = None
     sound = None
-    def __init__(self, x = 400, y = 300, velocity = -1):
+    def __init__(self, x, y, angle):
         if Enmey_Bullet.image == None:
-            Enmey_Bullet.image = load_image('jet.png')
-        self.x, self.y, self.velocity = x + 50, y-10, velocity
-        self.state = 1
+            Enmey_Bullet.image = load_image('enemy.png')
+        self.x, self.y, self.angle = x, y, angle
+        self.state = 3
 
 
     def draw(self):
