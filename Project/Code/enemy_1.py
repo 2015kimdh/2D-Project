@@ -39,15 +39,16 @@ class Enemy_1:
             self.time = 0
         if self.Hp == 0:
             self.state = 3
-        if self.time % 80 == 0:
+        if self.time % 120 == 0:
+            self.fire_bullet()
+
+
+    def fire_bullet(self):
             anglex = main_state.player.x - self.x;
             angley = main_state.player.y - self.y;
-            self.angle = math.atan2(anglex,angley)
+            self.angle = math.atan2(angley,anglex)
             enemybullet = Enmey_Bullet(self.x, self.y, self.angle)
             game_world.add_object(enemybullet, 1)
-
-
-
 
     def reduce_Hp(self):
         self.Hp -= 1
