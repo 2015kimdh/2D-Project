@@ -1,15 +1,16 @@
 import game_framework
 from pico2d import *
 import main_state
+import title_state
 
-name = "TitleState"
+name = "PauseState"
 image = None
 global timer
 timer = 0
 
 def enter():
     global image
-    image = load_image('pause.png')
+    image = load_image('enemy.png')
 
 
 def exit():
@@ -30,15 +31,8 @@ def handle_events():
 
 
 def draw():
-    global timer
     clear_canvas()
-    if timer < 200 :
-        image.draw(400, 300)
-    timer += 1
-    if timer == 400 :
-        timer = 0
-    main_state.grass.draw()
-    main_state.boy.draw()
+    image.draw(400, 300)
     update_canvas()
 
 def update():
