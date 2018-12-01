@@ -1,20 +1,28 @@
 import main_state
 import game_world
 from enemy_1 import Enemy_1
+from pico2d import *
 
 class Mapcounter:
+
 
     def __init__(self):
         self.counter = 0
         self.phase = 1
         self.spawntimer = 0
         self.type1_counter = 0
+        self.soundon = 0
+        self.sound = load_music('Ace.mp3')
 
     def draw(self):
         pass
 
     def update(self):
         self.spawntimer += 1
+        if self.soundon == 0:
+            self.sound.play()
+            self.sound.set_volume(50)
+            self.soundon += 1
 
     def spawn_enemy(self):
         if self.spawntimer % 30 == 0: #type1 spawn
