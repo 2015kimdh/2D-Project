@@ -44,7 +44,6 @@ def handle_events():
                 stage = 2
                 game_framework.change_state(main_state)
             elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_i):
-                stage = 2
                 game_framework.push_state(info_state)
             else :
                 pass
