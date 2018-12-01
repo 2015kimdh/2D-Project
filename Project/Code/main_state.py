@@ -15,17 +15,18 @@ from map_counter import Mapcounter
 
 name = "MainState"
 
-
+mainstage = None
 
 def enter():
-
+    global  mainstage
+    mainstage = title_state.stage
     global player
     player = Player()
-    sky = Sky(0)
+    sky = Sky(mainstage)
 
 
     global map_counter
-    map_counter = Mapcounter(1)
+    map_counter = Mapcounter(mainstage)
 
     game_world.add_object(sky, 0)
     game_world.add_object(player, 1)
@@ -83,11 +84,13 @@ def update():
                         map_counter.type2_counter -= 1
                     if Enemy_1.type == 3:
                         map_counter.type3_counter -= 1
+                        map_counter.phase = 4
                     if Enemy_1.type == 4:
                         map_counter.type4_counter -= 1
-
-    Mapcounter.stage1(map_counter)
-
+    if mainstage == 1:
+        Mapcounter.stage1(map_counter)
+    if mainstage == 2:
+        Mapcounter.stage2(map_counter)
 
 
 

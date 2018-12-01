@@ -14,7 +14,7 @@ class Sky:
         self.x = self.x % 3200 + 10
         self.sx = self.sx % 3200 + 10
     def draw(self):
-        if self.night == 0:
+        if self.night == 1:
             self.image.clip_draw(0, 0, 1600, 800, -(self.x)+800, self.y, 1600, 800)
             self.image.clip_composite_draw(0, 0, 1600, 600, 0, 'h', -(self.sx)+2400, self.y, 1600, 800)
             self.image.clip_draw(0, 0, 1600, 800, -(self.x) + 4000, self.y, 1600, 800)

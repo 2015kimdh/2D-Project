@@ -54,8 +54,8 @@ class Enemy_2:
                 self.image.clip_draw(137, 80, 114, 80, self.x, self.y, 200, 150)
                 game_world.remove_object(self)
             self.frame = (self.frame + player.FRAMES_PER_ACTION * player.ACTION_PER_TIME * game_framework.frame_time) % 8
-
-        draw_rectangle(*self.get_bb())
+        if player.rect == 0:
+            draw_rectangle(*self.get_bb())
 
     def update(self):
         if self.time < self.slice:

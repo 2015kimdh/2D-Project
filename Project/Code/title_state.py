@@ -6,7 +6,7 @@ import main_state
 name = "TitleState"
 image = None
 sound = None
-
+stage = None
 
 def enter():
     global image
@@ -30,13 +30,20 @@ def exit():
 def handle_events():
     events = get_events()
     for event in events:
+        global stage
         if event.type == SDL_QUIT:
             game_framework.quit()
         else:
             if(event.type, event.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
                 game_framework.quit()
-            elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_SPACE):
+            elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_1):
+                stage = 1
                 game_framework.change_state(main_state)
+            elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_2):
+                stage = 2
+                game_framework.change_state(main_state)
+            else :
+                pass
 
 
 def draw():

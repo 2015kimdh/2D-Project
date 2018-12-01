@@ -26,6 +26,7 @@ class Enemy_1:
         self.Type_one_starting_point_y = y
         self.x_pull = xpull
         self.y_pull = ypull
+        self.rect = 0
         self.dx, self.dy = dx, dy
         if Enemy_1.image == None:
             Enemy_1.image = load_image('enemy.png')
@@ -52,8 +53,8 @@ class Enemy_1:
                 self.image.clip_draw(137, 80, 114, 80, self.x, self.y, 120, 80)
                 game_world.remove_object(self)
             self.frame = (self.frame + player.FRAMES_PER_ACTION * player.ACTION_PER_TIME * game_framework.frame_time) % 8
-
-        draw_rectangle(*self.get_bb())
+        if player.rect == 0:
+            draw_rectangle(*self.get_bb())
 
     def update(self):
         self.x = (1 - self.time / self.slice) * (1 - self.time / self.slice) * self.sx + 2 * (1 - self.time / self.slice) * (self.time / self.slice) * (self.sx + self.dx+self.x_pull) + (self.time / self.slice) * (self.time / self.slice) * self.dx

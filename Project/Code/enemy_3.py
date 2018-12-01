@@ -45,6 +45,7 @@ class Enemy_3:
         self.move = 0
         self.randomnum = 0
         self.bullet_phase = 0
+        self.rect = 0
 
     def draw(self):
         if self.state == 2:
@@ -77,8 +78,8 @@ class Enemy_3:
             elif int(self.frame) >= 20:
                 game_world.remove_object(self)
             self.frame = (self.frame + player.FRAMES_PER_ACTION * player.ACTION_PER_TIME * game_framework.frame_time) % 21
-
-        draw_rectangle(*self.get_bb())
+        if player.rect == 0:
+            draw_rectangle(*self.get_bb())
 
     def update(self):
         if self.time < self.slice:

@@ -34,7 +34,7 @@ class Enemy_4:
         self.sx, self.sy = self.x, self.y
         self.state = 2
         self.type = 1
-        self.Hp = 5
+        self.Hp = 4
         self.slice = 400
         self.frame = 0
 
@@ -52,8 +52,8 @@ class Enemy_4:
                 self.image.clip_draw(137, 80, 114, 80, self.x, self.y, 120, 80)
                 game_world.remove_object(self)
             self.frame = (self.frame + player.FRAMES_PER_ACTION * player.ACTION_PER_TIME * game_framework.frame_time) % 8
-
-        draw_rectangle(*self.get_bb())
+        if player.rect == 0:
+            draw_rectangle(*self.get_bb())
 
     def update(self):
         self.x = (1 - self.time / self.slice) * (1 - self.time / self.slice) * self.sx + 2 * (1 - self.time / self.slice) * (self.time / self.slice) * (self.sx + self.dx+self.x_pull) + (self.time / self.slice) * (self.time / self.slice) * self.dx
@@ -65,8 +65,6 @@ class Enemy_4:
             self.state = 3
         if self.time % 100 < 2:
             self.fire_bullet()
-        if self.time % 120 < 12:
-            self.flower_bullet()
 
     def fire_bullet(self):
         anglex = main_state.player.x - self.x;

@@ -71,13 +71,13 @@ class Mapcounter:
             if self.type1_counter < 8 and self.spawntimer < 500:
                 enemy = Enemy_4(1200, 1000, 500, -500, 0, -200)
                 game_world.add_object(enemy, 1)
-                enemy = Enemy_1(1200, -200, 500, 500, 0, 800)
+                enemy = Enemy_4(1200, -200, 500, 500, 0, 800)
                 game_world.add_object(enemy, 1)
                 self.type1_counter += 2
             elif self.type1_counter < 8 and self.spawntimer > 500:
                 enemy = Enemy_4(1800, 200, 500, 300, 0, 0)
                 game_world.add_object(enemy, 1)
-                enemy = Enemy_1(1800, 600, 0, -500, -300, 600)  # 시작위치, 꺾이는 정도, 끝 위치
+                enemy = Enemy_4(1800, 600, 0, -500, -300, 600)  # 시작위치, 꺾이는 정도, 끝 위치
                 game_world.add_object(enemy, 1)
                 self.type1_counter += 2
 
@@ -86,17 +86,17 @@ class Mapcounter:
             if self.type1_counter < 5 and self.spawntimer < 500:
                 enemy = Enemy_4(1200, 1000, 500, -500, 0, -200)
                 game_world.add_object(enemy, 1)
-                enemy = Enemy_1(1200, -200, 500, 200, 0, 800)
+                enemy = Enemy_4(1200, -200, 500, 200, 0, 800)
                 game_world.add_object(enemy, 1)
                 self.type1_counter += 2
             elif self.type1_counter < 5 and self.spawntimer > 500:
                 enemy = Enemy_4(1800, 200, 500, 300, 0, 0)
                 game_world.add_object(enemy, 1)
-                enemy = Enemy_1(1800, 600, 0, -500, 0, 600)  # 시작위치, 꺾이는 정도, 끝 위치
+                enemy = Enemy_4(1800, 600, 0, -500, 0, 600)  # 시작위치, 꺾이는 정도, 끝 위치
                 game_world.add_object(enemy, 1)
                 self.type1_counter += 2
         if self.type2_counter < 2 and self.spawntimer < 250:  # type2 spawn
-            enemy = Enemy_2(1700, 550, -500, 0, 1400, 550)
+            enemy = Enemy_5(1700, 550, -500, 0, 1400, 550)
             game_world.add_object(enemy, 1)
             enemy = Enemy_5(1700, 200, -500, 0, 1400, 350)
             game_world.add_object(enemy, 1)
@@ -119,7 +119,7 @@ class Mapcounter:
         if self.type2_counter < 2 and int(self.spawntimer) % 200 == 0:
             enemy = Enemy_5(1700, 700, -500, 0, 1400, 550)
             game_world.add_object(enemy, 1)
-            enemy = Enemy_2(1700, 200, -500, 0, 1400, 350)
+            enemy = Enemy_5(1700, 200, -500, 0, 1400, 350)
             game_world.add_object(enemy, 1)
             enemy = Enemy_5(1700, 0, -500, -500, 1400, 200)
             game_world.add_object(enemy, 1)

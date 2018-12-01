@@ -26,7 +26,7 @@ FRAMES_PER_ACTION = 8
 
 
 # Boy Event
-RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP, PULLUP_DOWN, PULLUP_UP, PUSHDOWN_DOWN, PUSHDOWN_UP, SLEEP_TIMER, BULLET_UP, BULLET_DOWN, MISSILE_DOWN, MAP_CHANGE = range(13)
+RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP, PULLUP_DOWN, PULLUP_UP, PUSHDOWN_DOWN, PUSHDOWN_UP, SLEEP_TIMER, BULLET_UP, BULLET_DOWN, MISSILE_DOWN, MAP_CHANGE, RECT_ON = range(14)
 
 key_event_table = {
     (SDL_KEYDOWN, SDLK_RIGHT): RIGHT_DOWN,
@@ -40,7 +40,8 @@ key_event_table = {
     (SDL_KEYUP, SDLK_UP): PULLUP_UP,
     (SDL_KEYUP, SDLK_DOWN): PUSHDOWN_UP,
     (SDL_KEYDOWN, SDLK_x): MISSILE_DOWN,
-    (SDL_KEYDOWN, SDLK_q): MAP_CHANGE
+    (SDL_KEYDOWN, SDLK_q): MAP_CHANGE,
+    (SDL_KEYDOWN, SDLK_t): RECT_ON
 }
 
 
@@ -75,6 +76,8 @@ class RunState:
             player.armed = 0
         if event == MISSILE_DOWN:
             player.player_fire_missile()
+        if event == RECT_ON:
+            player.rect = (player.rect%2) + 1
         if event == MAP_CHANGE:
             player.map_change()
 
@@ -140,6 +143,7 @@ class Player:
         self.sound.set_volume(10)
         self.missile_sound.set_volume(30)
         self.state = 0
+        self.rect = 0
 
     def map_change(self):
         for sky in game_world.get_sky():

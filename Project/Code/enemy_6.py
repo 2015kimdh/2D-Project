@@ -7,7 +7,6 @@ import player
 from player import Player
 from Enemybullet import Enmey_Bullet
 from enemy_1 import Enemy_1
-import main_state
 
 
 PIXEL_PER_METER = (10.0 / 0.6) # 10 pix 60cm
@@ -77,8 +76,8 @@ class Enemy_6:
             elif int(self.frame) >= 20:
                 game_world.remove_object(self)
             self.frame = (self.frame + player.FRAMES_PER_ACTION * player.ACTION_PER_TIME * game_framework.frame_time) % 21
-
-        draw_rectangle(*self.get_bb())
+        if player.rect == 0:
+            draw_rectangle(*self.get_bb())
 
     def update(self):
         if self.time < self.slice:
