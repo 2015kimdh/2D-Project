@@ -25,8 +25,8 @@ class Mapcounter:
         self.state = 80
 
     def draw(self):
-        self.image.clip_draw(0, 45, 100, 56, 50, 100, 30, 160)
-        self.image.clip_draw(0, 0, 100, 44, 50, 100, 30, self.counter/2)
+        self.image.clip_draw(0, 45, 100, 56, 100, 100, 160, 30)
+        self.image.clip_draw(0, 0, 100, 44, 100 - 80+self.counter/2, 100, self.counter, 30)
 
     def update(self):
         self.spawntimer += (player.FRAMES_PER_ACTION * player.ACTION_PER_TIME * game_framework.frame_time)*5
