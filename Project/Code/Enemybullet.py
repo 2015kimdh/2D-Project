@@ -9,7 +9,7 @@ class Enmey_Bullet:
         if Enmey_Bullet.image == None:
             Enmey_Bullet.image = load_image('enemy.png')
         self.x, self.y, self.angle = x, y, angle
-        self.state = 3
+        self.state = 5
 
     def draw(self):
         self.image.clip_draw(48, 329, 9, 9, self.x, self.y,15, 15)

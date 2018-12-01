@@ -1,7 +1,9 @@
 from pico2d import *
 import game_world
+import game_framework
 import random
 import math
+import player
 from player import Player
 from Enemybullet import Enmey_Bullet
 import main_state
@@ -27,9 +29,23 @@ class Enemy_1:
         self.type = 1
         self.Hp = 3
         self.slice = 300
+        self.frame = 0
 
     def draw(self):
-        self.image.clip_draw(37, 432, 67, 32, self.x, self.y,60, 50)
+        if self.state == 2:
+            self.image.clip_draw(37, 432, 67, 32, self.x, self.y,60, 50)
+        elif self.state == 3:
+            if int(self.frame) < 2:
+                self.image.clip_draw(137, 393, 114, 100, self.x, self.y, 120, 120)
+            elif int(self.frame) < 4:
+                self.image.clip_draw(137, 313, 114, 77, self.x, self.y, 120, 120)
+            elif int(self.frame) < 6:
+                self.image.clip_draw(137, 240, 114, 57, self.x, self.y, 120, 80)
+            elif int(self.frame) < 8:
+                self.image.clip_draw(137, 80, 114, 80, self.x, self.y, 120, 80)
+                game_world.remove_object(self)
+            self.frame = (self.frame + player.FRAMES_PER_ACTION * player.ACTION_PER_TIME * game_framework.frame_time) % 8
+
         draw_rectangle(*self.get_bb())
 
     def update(self):

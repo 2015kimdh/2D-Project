@@ -73,10 +73,11 @@ def update():
                 if Enemy_1.Hp > 0:
                     Enemy_1.Hp -=1
                 if Enemy_1.Hp == 0:
-                    game_world.remove_object(Enemy_1)
+                    Enemy_1.state = 3
                     map_counter.counter += 1
                     if Enemy_1.type == 1:
                         map_counter.type1_counter -=1
+
 
     Mapcounter.spawn_enemy(map_counter)
 
