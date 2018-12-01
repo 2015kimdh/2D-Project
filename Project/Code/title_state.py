@@ -1,19 +1,30 @@
 import game_framework
+import game_world
 from pico2d import *
 import main_state
 
 name = "TitleState"
 image = None
+sound = None
 
 
 def enter():
     global image
     image = load_image('f22.png')
 
+    global sound
+    sound = load_music('Ace_Combat.mp3')
+    sound.set_volume(40)
+    sound.repeat_play()
+
 
 def exit():
     global image
     del(image)
+
+    global sound
+    sound.pause()
+    del(sound)
 
 
 def handle_events():
