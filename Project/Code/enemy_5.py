@@ -16,7 +16,7 @@ FLY_SPEED_MPS = (FLY_SPEED_MPM / 60.0)
 FLY_SPEED_PPS = (FLY_SPEED_MPS * PIXEL_PER_METER)
 FLY_UP_SPEED_PPS = (FLY_SPEED_MPS * PIXEL_PER_METER)
 
-class Enemy_2:
+class Enemy_5:
 
     image = None
 
@@ -27,14 +27,14 @@ class Enemy_2:
         self.x_pull = xpull
         self.y_pull = ypull
         self.dx, self.dy = dx, dy
-        if Enemy_2.image == None:
-            Enemy_2.image = load_image('enemy.png')
+        if Enemy_5.image == None:
+            Enemy_5.image = load_image('enemy.png')
         self.time = 0
         self.x, self.y, self.velocity = self.Type_one_starting_point_x, self.Type_one_starting_point_y, 1
         self.sx, self.sy = self.x, self.y
         self.state = 2
         self.type = 2
-        self.Hp = 25
+        self.Hp = 40
         self.slice = 500
         self.frame = 0
         self.move = 0
@@ -42,7 +42,7 @@ class Enemy_2:
 
     def draw(self):
         if self.state == 2:
-            self.image.clip_draw(15, 265, 120, 45, self.x, self.y,150, 100)
+            self.image.clip_draw(15, 217, 120, 45, self.x, self.y,150, 100)
         elif self.state == 3:
             if int(self.frame) < 2:
                 self.image.clip_draw(137, 393, 114, 100, self.x, self.y, 200, 200)
@@ -82,8 +82,8 @@ class Enemy_2:
             self.move = 1
         if self.Hp == 0:
             self.state = 3
-        if self.time % 120 < 6:
-            radian = ((self.time % 7) * 60)/180 * math.pi
+        if self.time % 120 < 10:
+            radian = ((self.time % 11) * 36)/180 * math.pi
             self.fire_bullet(radian)
 
 

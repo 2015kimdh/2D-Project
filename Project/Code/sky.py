@@ -1,14 +1,14 @@
 from pico2d import *
 
 class Sky:
-    def __init__(self):
+    def __init__(self, stage):
         self.image = load_image('cloud.png')   #밝은 하늘
         self.image2 = load_image('cloud_1.png')    #저녁 노을
         self.x = 0
         self.y = 400
         self.sx = 0
         self.sy = 400
-        self.night = 0
+        self.night = stage
 
     def update(self):
         self.x = self.x % 3200 + 10

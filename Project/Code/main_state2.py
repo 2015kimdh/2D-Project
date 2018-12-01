@@ -21,11 +21,11 @@ def enter():
 
     global player
     player = Player()
-    sky = Sky(0)
+    sky = Sky(1)
 
 
     global map_counter
-    map_counter = Mapcounter(1)
+    map_counter = Mapcounter()
 
     game_world.add_object(sky, 0)
     game_world.add_object(player, 1)
@@ -74,7 +74,7 @@ def update():
                 game_world.remove_object(P_Bullet)
                 if Enemy_1.Hp > 0:
                     Enemy_1.Hp -=1
-                if Enemy_1.Hp == 0:
+                if Enemy_1.Hp <= 0:
                     Enemy_1.state = 3
                     map_counter.counter += 1
                     if Enemy_1.type == 1:
@@ -83,10 +83,11 @@ def update():
                         map_counter.type2_counter -= 1
                     if Enemy_1.type == 3:
                         map_counter.type3_counter -= 1
+                        map_counter.phase = 4
                     if Enemy_1.type == 4:
                         map_counter.type4_counter -= 1
 
-    Mapcounter.stage1(map_counter)
+    Mapcounter.stage2(map_counter)
 
 
 
