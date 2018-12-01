@@ -8,6 +8,14 @@ from player import Player
 from Enemybullet import Enmey_Bullet
 import main_state
 
+
+PIXEL_PER_METER = (10.0 / 0.6) # 10 pix 60cm
+FLY_SPEED_KMPH = 120.0
+FLY_SPEED_MPM = (FLY_SPEED_KMPH * 1000.0 / 60.0)
+FLY_SPEED_MPS = (FLY_SPEED_MPM / 60.0)
+FLY_SPEED_PPS = (FLY_SPEED_MPS * PIXEL_PER_METER)
+FLY_UP_SPEED_PPS = (FLY_SPEED_MPS * PIXEL_PER_METER)
+
 class Enemy_2:
 
     image = None
@@ -60,18 +68,18 @@ class Enemy_2:
                 self.y = (1 - self.time / self.slice) * (1 - self.time / self.slice) * self.sy + 2 * (1 - self.time / self.slice) * (self.time / self.slice) * (self.sy + self.dy + self.y_pull) + (self.time / self.slice) * (self.time / self.slice) * self.dy
             elif self.move == 1 and self.time % 50 < 2:
                 if self.x < 1550:
-                    self.randomnumx = random.randint(-3, 3)
+                    self.randomnumx = random.randint(-1, 1)
                 elif self.x > 1550:
-                    self.randomnumx = random.randint(-3, -1)
+                    self.randomnumx = -1
                 if self.y < 800 and self.y > 50:
-                    self.randomnumy = random.randint(-3, 3)
+                    self.randomnumy = random.randint(-1, 1)
                 elif self.y > 800:
-                    self.randomnumy = random.randint(-3, -1)
+                    self.randomnumy = -1
                 elif self.y < 50:
-                    self.randomnumy = random.randint(1, 3)
+                    self.randomnumy = 1
             if self.move == 1:
-                self.x += (player.FRAMES_PER_ACTION * player.ACTION_PER_TIME * game_framework.frame_time) * self.randomnumx
-                self.y += (player.FRAMES_PER_ACTION * player.ACTION_PER_TIME * game_framework.frame_time) * self.randomnumy
+                self.x += FLY_SPEED_PPS/5 * game_framework.frame_time * self.randomnumx
+                self.y += FLY_SPEED_PPS/5 * game_framework.frame_time * self.randomnumy
             self.time += (player.FRAMES_PER_ACTION * player.ACTION_PER_TIME * game_framework.frame_time) * 3
         if self.time > self.slice:
             self.time = 0
@@ -79,8 +87,9 @@ class Enemy_2:
         if self.Hp == 0:
             self.state = 3
         if self.time % 120 < 2:
-            for i in range(5):
-                self.fire_bullet(-(i * 30))
+            for i in range(6):
+                radian = (i * 60)/180 * math.pi
+                self.fire_bullet(radian)
 
 
     def fire_bullet(self, angle):
@@ -93,4 +102,4 @@ class Enemy_2:
 
     def get_bb(self):  # 충돌체크용 좌표 받아오기
         # fill here
-        return self.x - 60, self.y - 100, self.x + 60, self.y + 100
+        return self.x - PIXEL_PER_METER * 3, self.y - PIXEL_PER_METER * 2.5, self.x + PIXEL_PER_METER * 3, self.y + PIXEL_PER_METER * 2.5

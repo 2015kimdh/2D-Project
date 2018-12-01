@@ -8,6 +8,13 @@ from player import Player
 from Enemybullet import Enmey_Bullet
 import main_state
 
+PIXEL_PER_METER = (10.0 / 0.6) # 10 pix 60cm
+FLY_SPEED_KMPH = 120.0
+FLY_SPEED_MPM = (FLY_SPEED_KMPH * 1000.0 / 60.0)
+FLY_SPEED_MPS = (FLY_SPEED_MPM / 60.0)
+FLY_SPEED_PPS = (FLY_SPEED_MPS * PIXEL_PER_METER)
+FLY_UP_SPEED_PPS = (FLY_SPEED_MPS * PIXEL_PER_METER)
+
 class Enemy_1:
 
     image = None
@@ -72,4 +79,4 @@ class Enemy_1:
 
     def get_bb(self):  # 충돌체크용 좌표 받아오기
         # fill here
-        return self.x - 30, self.y - 20, self.x + 30, self.y + 20
+        return self.x - PIXEL_PER_METER * 1.5, self.y - PIXEL_PER_METER * 1, self.x + PIXEL_PER_METER * 1.5, self.y + PIXEL_PER_METER * 1
