@@ -20,7 +20,7 @@ class Enmey_Bullet:
         self.state = 5
 
     def draw(self):
-        self.image.clip_draw(48, 329, 9, 9, self.x, self.y,15, 15)
+        self.image.clip_draw(48, 329, 9, 9, self.x, self.y,25, 25)
         draw_rectangle(*self.get_bb())
 
     def update(self):

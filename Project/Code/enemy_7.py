@@ -39,7 +39,7 @@ class Enemy_7:
         self.sx, self.sy = self.x, self.y
         self.state = 2
         self.type = 4
-        self.Hp = 700
+        self.Hp = 1100
         self.slice = 580
         self.frame = 0
         self.move = 0
@@ -89,7 +89,7 @@ class Enemy_7:
             elif int(self.frame) >= 30:
                 game_world.remove_object(self)
             self.frame = (self.frame + player.FRAMES_PER_ACTION * player.ACTION_PER_TIME * game_framework.frame_time) % 31
-        if player.rect == 0:
+        if main_state.player.rect == 0:
             draw_rectangle(*self.get_bb())
 
     def update(self):
@@ -119,14 +119,14 @@ class Enemy_7:
             self.move = 1
         if self.Hp == 0:
             self.state = 3
-        if self.Hp > 500:
+        if self.Hp > 900:
             self.bullet_phase0()
-        elif self.Hp < 500 and self.Hp > 300:
+        elif self.Hp < 900 and self.Hp > 700:
             self.bullet_phase1()
-        elif self.Hp < 300 and self.Hp > 100:
+        elif self.Hp < 700 and self.Hp > 400:
             self.bullet_phase2()
-        elif self.Hp > 100:
-            self.bullet_phase2()
+        elif self.Hp < 400:
+            self.bullet_phase3()
 
     def fire_bullet(self, angle):
             self.angle = angle
@@ -138,7 +138,7 @@ class Enemy_7:
 
     def get_bb(self):  # 충돌체크용 좌표 받아오기
         # fill here
-        return self.x - PIXEL_PER_METER * 10, self.y - PIXEL_PER_METER * 6, self.x + PIXEL_PER_METER * 10, self.y + PIXEL_PER_METER * 6
+        return self.x - PIXEL_PER_METER * 7, self.y - PIXEL_PER_METER * 6, self.x + PIXEL_PER_METER * 7, self.y + PIXEL_PER_METER * 6
 
     def bullet_phase0(self):
         if self.time % 40 < 13:
@@ -157,18 +157,18 @@ class Enemy_7:
             Enemy_1.fire_bullet(self)
     def bullet_phase2(self):
         if int(self.time % 20) == 0 and int(self.time) < 400:
-            #radian = ((self.time % 90)) / 180 * math.pi
-            #self.fire_bullet(radian)
+            radian = ((self.time % 90)) / 180 * math.pi
+            self.fire_bullet(radian)
             radian = ((self.time % 90)+90) / 180 * math.pi
             self.fire_bullet(radian)
             radian = (-(self.time % 90) + 180) / 180 * math.pi
             self.fire_bullet(radian)
-            #radian = ((self.time % 90) + 270) / 180 * math.pi
-            #self.fire_bullet(radian)
+            radian = ((self.time % 90) + 270) / 180 * math.pi
+            self.fire_bullet(radian)
         if int(self.time % 5) == 0 and int(self.time) > 300:
             radian = ((self.time % 120)+120) / 180 * math.pi
             self.fire_bullet(radian)
-        if int(self.time % 50) == 0:
+        if int(self.time % 20) == 0:
             Enemy_1.fire_bullet(self)
     def bullet_phase3(self):
         if self.time % 20 < 9:
@@ -177,13 +177,13 @@ class Enemy_7:
         if int(self.time % 10) == 0 and int(self.time) < 250:
             radian = ((self.time % 90)+150) / 180 * math.pi
             self.fire_bullet(radian)
-        if int(self.time % 30) == 0:
-            self.fire_bullet_boss(self)
+        if int(self.time % 20) == 0:
+            self.fire_bullet_boss()
 
     def fire_bullet_boss(self):
         anglex = main_state.player.x - self.x;
         angley = main_state.player.y - self.y;
-        if self.time % 120 < 10:
+        if self.time % 120 < 20:
             self.angle = math.atan2(angley,anglex) - (self.time % 11) + 11/2
         enemybullet = Enmey_Bullet(self.x, self.y, self.angle)
         game_world.add_object(enemybullet, 1)

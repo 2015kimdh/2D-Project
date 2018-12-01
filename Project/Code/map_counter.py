@@ -26,7 +26,10 @@ class Mapcounter:
         self.type3_counter = 0
         self.type4_counter = 0
         self.soundon = 0
-        self.sound = load_music('Ace.mp3')
+        if self.stage == 1:
+            self.sound = load_music('Blister.mp3')
+        if self.stage == 2:
+            self.sound = load_music('Ace.mp3')
         self.font = load_font('ENCR10B.TTF', 16)
         self.state = 80
 
@@ -40,7 +43,7 @@ class Mapcounter:
             self.sound.repeat_play()
             self.sound.set_volume(50)
             self.soundon += 1
-
+            #
     def stage2(self):
         self.spawn_enemy2()
 
@@ -56,14 +59,14 @@ class Mapcounter:
         elif self.phase == 4:
             self.stage2_phase4()
 
-        if self.spawntimer > 750:
-            self.spawntimer = 0
-        if self.counter > 40:
-            self.phase = 1
-        if self.counter > 110:
-            self.phase = 2
-        if self.counter > 160:
-            self.phase = 3
+        #if self.spawntimer > 750:
+        #    self.spawntimer = 0
+        #if self.counter > 40:
+        #    self.phase = 1
+        #if self.counter > 110:
+        #    self.phase = 2
+        #if self.counter > 160:
+        #    self.phase = 3
         self.update()
 
     def stage2_phase0(self):

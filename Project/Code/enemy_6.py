@@ -76,7 +76,7 @@ class Enemy_6:
             elif int(self.frame) >= 20:
                 game_world.remove_object(self)
             self.frame = (self.frame + player.FRAMES_PER_ACTION * player.ACTION_PER_TIME * game_framework.frame_time) % 21
-        if player.rect == 0:
+        if main_state.player.rect == 0:
             draw_rectangle(*self.get_bb())
 
     def update(self):

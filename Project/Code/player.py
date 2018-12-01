@@ -77,7 +77,10 @@ class RunState:
         if event == MISSILE_DOWN:
             player.player_fire_missile()
         if event == RECT_ON:
-            player.rect = (player.rect%2) + 1
+            if player.rect == 0:
+                player.rect = 1
+            else :
+                player.rect = 0
         if event == MAP_CHANGE:
             player.map_change()
 
@@ -112,13 +115,14 @@ class RunState:
     @staticmethod
     def draw(player):
             player.image.clip_draw(0, int(player.frame) * 85, 370, 85, player.x, player.y, 185, 42.5)
-            draw_rectangle(*player.get_bb())
+            if player.rect == 0:
+                draw_rectangle(*player.get_bb())
 
 
 next_state_table = {
     RunState: {PUSHDOWN_DOWN : RunState, PUSHDOWN_UP : RunState, PULLUP_DOWN : RunState, PULLUP_UP : RunState, RIGHT_UP: RunState, LEFT_UP: RunState, LEFT_DOWN: RunState,
                RIGHT_DOWN: RunState, BULLET_DOWN: RunState, BULLET_UP: RunState, MISSILE_DOWN: RunState,
-               MAP_CHANGE : RunState}}
+               MAP_CHANGE : RunState, RECT_ON : RunState}}
 
 class Player:
 
@@ -186,4 +190,4 @@ class Player:
 
     def get_bb(self):  # 충돌체크용 좌표 받아오기
         # fill here
-        return self.x - PIXEL_PER_METER*2, self.y - PIXEL_PER_METER*1.0, self.x + PIXEL_PER_METER*3.5, self.y + PIXEL_PER_METER*0.5
+        return self.x - PIXEL_PER_METER*1, self.y - PIXEL_PER_METER*1.0, self.x + PIXEL_PER_METER*2, self.y + PIXEL_PER_METER*0.5
