@@ -2,6 +2,7 @@ import game_framework
 import game_world
 from pico2d import *
 import main_state
+import info_state
 
 name = "TitleState"
 image = None
@@ -42,13 +43,16 @@ def handle_events():
             elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_2):
                 stage = 2
                 game_framework.change_state(main_state)
+            elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_i):
+                stage = 2
+                game_framework.push_state(info_state)
             else :
                 pass
 
 
 def draw():
     clear_canvas()
-    image.clip_draw(0, 0, 1920, 1080, 800, 400, 1600, 800)
+    image.clip_draw(0, 0, 2560, 1600, 800, 400, 1600, 800)
     update_canvas()
 
 

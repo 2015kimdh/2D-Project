@@ -47,8 +47,10 @@ class Enemy_7:
         self.bullet_phase = 0
 
     def draw(self):
-        if self.state == 2:
+        if self.state == 2 and self.phase <= 2:
             self.image.clip_draw(269, 80, 209, 90, self.x, self.y,400, 250)
+        elif self.state == 2 and self.phase > 2:
+            self.image.clip_draw(269, 181, 209, 90, self.x, self.y, 400, 250)
         elif self.state == 3:
             if int(self.frame) < 6:
                 self.image.clip_draw(137, 393, 114, 100, self.x, self.y, 400, 250)

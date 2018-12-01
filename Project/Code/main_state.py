@@ -22,6 +22,7 @@ def enter():
     mainstage = title_state.stage
     global player
     player = Player()
+    global sky
     sky = Sky(mainstage)
 
 
@@ -87,6 +88,10 @@ def update():
                         map_counter.phase = 4
                     if Enemy_1.type == 4:
                         map_counter.type4_counter -= 1
+            if collide(Enemy_1, P_Bullet) and Enemy_1.state == 5 and P_Bullet.state == 0:
+                game_world.remove_object(Enemy_1)
+                player.frame = 0
+                player.state = 8
     if mainstage == 1:
         Mapcounter.stage1(map_counter)
     if mainstage == 2:
