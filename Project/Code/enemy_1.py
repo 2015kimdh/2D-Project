@@ -22,6 +22,9 @@ class Enemy_1:
         self.dx, self.dy = dx, dy
         if Enemy_1.image == None:
             Enemy_1.image = load_image('enemy.png')
+        if Enemy_1.sound == None:
+            Enemy_1.sound = load_wav('Bomb.wav')
+            Enemy_1.sound.set_volume(2)
         self.time = 0
         self.x, self.y, self.velocity = self.Type_one_starting_point_x, self.Type_one_starting_point_y, 1
         self.sx, self.sy = self.x, self.y

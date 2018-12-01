@@ -15,8 +15,13 @@ from map_counter import Mapcounter
 name = "MainState"
 
 boy = None
+sound = None
+sound = load_music('Ace.mp3')
+
 
 def enter():
+
+
     global player
     player = Player()
     sky = Sky()
@@ -25,9 +30,10 @@ def enter():
     global map_counter
     map_counter = Mapcounter()
 
-
+    sound.play()
     game_world.add_object(sky, 0)
     game_world.add_object(player, 1)
+
 
 
 def exit():
