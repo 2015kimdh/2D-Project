@@ -22,9 +22,6 @@ class Enemy_1:
         self.dx, self.dy = dx, dy
         if Enemy_1.image == None:
             Enemy_1.image = load_image('enemy.png')
-        if Enemy_1.sound == None:
-            Enemy_1.sound = load_wav('Bomb.wav')
-            Enemy_1.sound.set_volume(2)
         self.time = 0
         self.x, self.y, self.velocity = self.Type_one_starting_point_x, self.Type_one_starting_point_y, 1
         self.sx, self.sy = self.x, self.y
@@ -54,12 +51,12 @@ class Enemy_1:
     def update(self):
         self.x = (1 - self.time / self.slice) * (1 - self.time / self.slice) * self.sx + 2 * (1 - self.time / self.slice) * (self.time / self.slice) * (self.sx + self.dx+self.x_pull) + (self.time / self.slice) * (self.time / self.slice) * self.dx
         self.y = (1 - self.time / self.slice) * (1 - self.time / self.slice) * self.sy + 2 * (1 - self.time / self.slice) * (self.time / self.slice) * (self.sy + self.dy + self.y_pull) + (self.time / self.slice) * (self.time / self.slice) * self.dy
-        self.time += 1
-        if self.time == self.slice:
+        self.time += (player.FRAMES_PER_ACTION * player.ACTION_PER_TIME * game_framework.frame_time) * 5
+        if self.time > self.slice:
             self.time = 0
         if self.Hp == 0:
             self.state = 3
-        if self.time % 120 == 0:
+        if self.time % 120 < 2:
             self.fire_bullet()
 
 

@@ -82,6 +82,8 @@ def update():
                     map_counter.counter += 1
                     if Enemy_1.type == 1:
                         map_counter.type1_counter -=1
+                    if Enemy_1.type == 1:
+                        map_counter.type2_counter -= 1
 
 
     Mapcounter.spawn_enemy(map_counter)
