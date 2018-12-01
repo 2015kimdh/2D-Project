@@ -54,20 +54,24 @@ class Enemy_2:
         draw_rectangle(*self.get_bb())
 
     def update(self):
-
-
         if self.time < self.slice:
             if self.move == 0:
                 self.x = (1 - self.time / self.slice) * (1 - self.time / self.slice) * self.sx + 2 * (1 - self.time / self.slice) * (self.time / self.slice) * (self.sx + self.dx + self.x_pull) + (self.time / self.slice) * (self.time / self.slice) * self.dx
                 self.y = (1 - self.time / self.slice) * (1 - self.time / self.slice) * self.sy + 2 * (1 - self.time / self.slice) * (self.time / self.slice) * (self.sy + self.dy + self.y_pull) + (self.time / self.slice) * (self.time / self.slice) * self.dy
-            elif self.move == 1 and self.time % 120 < 2:
+            elif self.move == 1 and self.time % 50 < 2:
                 if self.x < 1550:
-                    self.randomnum = random.randint(-3, 3)
+                    self.randomnumx = random.randint(-3, 3)
                 elif self.x > 1550:
-                    self.randomnum = random.randint(-3, -1)
+                    self.randomnumx = random.randint(-3, -1)
+                if self.y < 800 and self.y > 50:
+                    self.randomnumy = random.randint(-3, 3)
+                elif self.y > 800:
+                    self.randomnumy = random.randint(-3, -1)
+                elif self.y < 50:
+                    self.randomnumy = random.randint(1, 3)
             if self.move == 1:
-                self.x += (player.FRAMES_PER_ACTION * player.ACTION_PER_TIME * game_framework.frame_time) * self.randomnum
-                self.y += (player.FRAMES_PER_ACTION * player.ACTION_PER_TIME * game_framework.frame_time) * self.randomnum
+                self.x += (player.FRAMES_PER_ACTION * player.ACTION_PER_TIME * game_framework.frame_time) * self.randomnumx
+                self.y += (player.FRAMES_PER_ACTION * player.ACTION_PER_TIME * game_framework.frame_time) * self.randomnumy
             self.time += (player.FRAMES_PER_ACTION * player.ACTION_PER_TIME * game_framework.frame_time) * 3
         if self.time > self.slice:
             self.time = 0
@@ -76,7 +80,7 @@ class Enemy_2:
             self.state = 3
         if self.time % 120 < 2:
             for i in range(5):
-                self.fire_bullet(-(i * 20))
+                self.fire_bullet(-(i * 30))
 
 
     def fire_bullet(self, angle):

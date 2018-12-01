@@ -1,6 +1,7 @@
 import main_state
 import game_world
 import game_framework
+import player
 from enemy_1 import Enemy_1
 from enemy_2 import Enemy_2
 from pico2d import *
@@ -21,7 +22,7 @@ class Mapcounter:
         pass
 
     def update(self):
-        self.spawntimer += (player.FRAMES_PER_ACTION * player.ACTION_PER_TIME * game_framework.frame_time)
+        self.spawntimer += (player.FRAMES_PER_ACTION * player.ACTION_PER_TIME * game_framework.frame_time)*5
         if self.soundon == 0:
             self.sound.play()
             self.sound.set_volume(50)
@@ -43,7 +44,7 @@ class Mapcounter:
                     game_world.add_object(enemy, 1)
                     self.type1_counter += 2
         elif self.phase == 1:
-            if self.spawntimer % 30 == 0: #type1 spawn
+            if int(self.spawntimer) % 30 == 0: #type1 spawn
                 if self.type1_counter < 6 and self.spawntimer < 500:
                     enemy = Enemy_1(1200, 1000, 500, -200, 0, -200)
                     game_world.add_object(enemy, 1)
@@ -66,8 +67,11 @@ class Mapcounter:
                 self.type2_counter += 3
 
 
-        if self.spawntimer == 1000:
+
+        if self.spawntimer > 750:
             self.spawntimer = 0
+        if self.counter > 30:
+            self.phase = 1
         if self.counter > 30:
             self.phase = 1
         self.update()
