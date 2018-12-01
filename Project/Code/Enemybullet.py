@@ -1,7 +1,15 @@
 from pico2d import *
 import game_world
+import game_framework
 import main_state
 import player
+
+PIXEL_PER_METER = (10.0 / 0.6) # 10 pix 60cm
+FLY_SPEED_KMPH = 120.0
+FLY_SPEED_MPM = (FLY_SPEED_KMPH * 1000.0 / 60.0)
+FLY_SPEED_MPS = (FLY_SPEED_MPM / 60.0)
+FLY_SPEED_PPS = (FLY_SPEED_MPS * PIXEL_PER_METER)
+FLY_UP_SPEED_PPS = (FLY_SPEED_MPS * PIXEL_PER_METER)
 
 class Enmey_Bullet:
     image = None
@@ -16,8 +24,8 @@ class Enmey_Bullet:
         draw_rectangle(*self.get_bb())
 
     def update(self):
-        self.x += math.cos(self.angle)*(4)
-        self.y += math.sin(self.angle)*(4)
+        self.x += math.cos(self.angle)*FLY_SPEED_PPS/4 * game_framework.frame_time
+        self.y += math.sin(self.angle)*FLY_SPEED_PPS/4 * game_framework.frame_time
 
         if self.x < 25 or self.x > 1600 - 25 or self.y < 0 or self.y > 800:
             game_world.remove_object(self)

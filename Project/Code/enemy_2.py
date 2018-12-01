@@ -19,7 +19,6 @@ FLY_UP_SPEED_PPS = (FLY_SPEED_MPS * PIXEL_PER_METER)
 class Enemy_2:
 
     image = None
-    sound = None
 
     def __init__(self, x, y, xpull, ypull, dx, dy):
 
@@ -30,9 +29,6 @@ class Enemy_2:
         self.dx, self.dy = dx, dy
         if Enemy_2.image == None:
             Enemy_2.image = load_image('enemy.png')
-        if Enemy_2.sound == None:
-            Enemy_2.sound = load_wav('Bomb.wav')
-            Enemy_2.sound.set_volume(2)
         self.time = 0
         self.x, self.y, self.velocity = self.Type_one_starting_point_x, self.Type_one_starting_point_y, 1
         self.sx, self.sy = self.x, self.y
@@ -86,10 +82,9 @@ class Enemy_2:
             self.move = 1
         if self.Hp == 0:
             self.state = 3
-        if self.time % 120 < 2:
-            for i in range(6):
-                radian = (i * 60)/180 * math.pi
-                self.fire_bullet(radian)
+        if self.time % 120 < 6:
+            radian = ((self.time % 7) * 60)/180 * math.pi
+            self.fire_bullet(radian)
 
 
     def fire_bullet(self, angle):

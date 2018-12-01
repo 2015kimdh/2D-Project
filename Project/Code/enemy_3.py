@@ -127,17 +127,15 @@ class Enemy_3:
         return self.x - PIXEL_PER_METER * 6.5, self.y - PIXEL_PER_METER * 4.3, self.x + PIXEL_PER_METER * 6.5, self.y + PIXEL_PER_METER * 4.3
 
     def bullet_phase0(self):
-        if int(self.time % 30) == 0:
-            for i in range(12):
-                radian = (i * 30) / 180 * math.pi
-                self.fire_bullet(radian)
+        if self.time % 40 < 13:
+            radian = ((self.time % 13) * 30) / 180 * math.pi
+            self.fire_bullet(radian)
         if int(self.time % 50) == 0:
             Enemy_1.fire_bullet(self)
     def bullet_phase1(self):
-        if int(self.time % 20) == 0:
-            for i in range(8):
-                radian = (i * 45) / 180 * math.pi
-                self.fire_bullet(radian)
+        if self.time % 20 < 9:
+            radian = ((self.time % 9) * 45) / 180 * math.pi
+            self.fire_bullet(radian)
         if int(self.time % 15) == 0 and int(self.time) < 250:
             radian = ((self.time % 90)+150) / 180 * math.pi
             self.fire_bullet(radian)

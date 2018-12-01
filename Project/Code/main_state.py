@@ -73,7 +73,6 @@ def update():
     for P_Bullet in game_world.objects[1]:
         for Enemy_1 in game_world.objects[1]:
             if collide(Enemy_1, P_Bullet) and Enemy_1.state == 2 and P_Bullet.state == 1:
-                print("COLLISION")
                 game_world.remove_object(P_Bullet)
                 if Enemy_1.Hp > 0:
                     Enemy_1.Hp -=1
@@ -86,7 +85,8 @@ def update():
                         map_counter.type2_counter -= 1
 
 
-    Mapcounter.spawn_enemy(map_counter)
+    Mapcounter.stage1(map_counter)
+
 
 
 
@@ -97,7 +97,7 @@ def draw():
     clear_canvas()
     for game_object in game_world.all_objects():
         game_object.draw()
-
+    Mapcounter.draw(map_counter)
     update_canvas()
 
 

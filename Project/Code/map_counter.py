@@ -9,8 +9,10 @@ from pico2d import *
 
 class Mapcounter:
 
-
+    image = None
     def __init__(self):
+        if Mapcounter.image == None:
+            Mapcounter.image = load_image('gage.png')
         self.counter = 0
         self.phase = 0
         self.spawntimer = 0
@@ -19,9 +21,12 @@ class Mapcounter:
         self.type3_counter = 0
         self.soundon = 0
         self.sound = load_music('Ace.mp3')
+        self.font = load_font('ENCR10B.TTF', 16)
+        self.state = 80
 
     def draw(self):
-        pass
+        self.image.clip_draw(0, 45, 100, 56, 50, 100, 30, 160)
+        self.image.clip_draw(0, 0, 100, 44, 50, 100, 30, self.counter/2)
 
     def update(self):
         self.spawntimer += (player.FRAMES_PER_ACTION * player.ACTION_PER_TIME * game_framework.frame_time)*5
@@ -30,7 +35,11 @@ class Mapcounter:
             self.sound.set_volume(50)
             self.soundon += 1
 
-    def spawn_enemy(self):
+    def stage1(self):
+        self.spawn_enemy1()
+
+
+    def spawn_enemy1(self):
         if self.phase == 0:
             self.phase0()
         elif self.phase == 1:
@@ -44,11 +53,12 @@ class Mapcounter:
             self.spawntimer = 0
         if self.counter > 40:
             self.phase = 1
-        if self.counter > 120:
+        if self.counter > 110:
             self.phase = 2
-        if self.counter > 180:
+        if self.counter > 160:
             self.phase = 3
         self.update()
+
 
     def phase0(self):
         if int(self.spawntimer) % 30 == 0:  # type1 spawn

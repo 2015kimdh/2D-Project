@@ -102,8 +102,8 @@ class RunState:
             if player.y > 30 + player.altitude * game_framework.frame_time:
                 player.y += player.altitude * game_framework.frame_time
 
-        player.shottime = get_time()
-        if player.armed == 1 and player.shottime % player.bullet_load >= 0.01:
+        player.shottime += (FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) * 3
+        if player.armed == 1 and int(player.shottime % 4) == 0:
             player.player_fire_bullet()
 
     @staticmethod
