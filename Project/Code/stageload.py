@@ -6,6 +6,7 @@ import main_state
 name = "loadState"
 image = None
 sound = None
+stage = 0
 logo_time = 0.0
 
 
@@ -27,8 +28,10 @@ def update():
     delay(0.01)
     logo_time += 0.01
     if logo_time > 3:
+        global stage
+        stage = 2
         game_framework.change_state(main_state)
-        main_state.stage = 2
+
 
 def draw():
     global image

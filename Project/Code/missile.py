@@ -2,7 +2,7 @@ from pico2d import *
 import game_framework
 import player
 import game_world
-
+from Enemybullet import Enmey_Bullet
 class P_missile:
     image = None
 
@@ -14,11 +14,10 @@ class P_missile:
         self.dx, self.dy = 1400, y-10
         self.time = 0
         self.frame = 0
-        self.state = 2
+        self.state = 12
 
     def draw(self):
         self.image.clip_draw(473, 380 + int(self.frame) * 52, 200, 50, self.x, self.y, 100, 25)
-        draw_rectangle(*self.get_bb())
 
     def update(self):   # 스플라인 곡선 그리기
         self.x = (1 - self.time / 100)*(1 - self.time / 100)*self.sx + 2*(1 - self.time / 100)*(self.time / 100)*(self.sx + self.dx - 1800) + (self.time / 100)*(self.time / 100)*self.dx
@@ -27,6 +26,9 @@ class P_missile:
         self.frame = 1+(self.frame + player.FRAMES_PER_ACTION * player.ACTION_PER_TIME * game_framework.frame_time) % 3
 
         if self.x > 1400 - 25:
+            for Enmey_Bullet in game_world.all_objects():
+                if Enmey_Bullet.state == 5:
+                    game_world.remove_object(Enmey_Bullet)
             game_world.remove_object(self)
 
     def get_bb(self):

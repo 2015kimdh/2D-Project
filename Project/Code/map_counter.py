@@ -28,20 +28,23 @@ class Mapcounter:
         self.soundon = 0
         if self.stage == 1:
             self.sound = load_music('Blister.mp3')
+            self.sound.set_volume(70)
         if self.stage == 2:
             self.sound = load_music('Ace.mp3')
+            self.sound.set_volume(50)
         self.font = load_font('ENCR10B.TTF', 16)
         self.state = 80
+        self.bossturn = 0
 
     def draw(self):
-        self.image.clip_draw(0, 45, 100, 56, 100, 100, 160, 30)
-        self.image.clip_draw(0, 0, 100, 44, 100 - 80+self.counter/2, 100, self.counter, 30)
+        self.image.clip_draw(0, 45, 100, 56, 100, 100, 180, 30)
+        self.image.clip_draw(0, 0, 100, 44, 100 - 90+self.counter/2, 100, self.counter, 30)
+        self.font.draw(250, 100, 'Map Progressing', (120, 250, 120))
 
     def update(self):
         self.spawntimer += (player.FRAMES_PER_ACTION * player.ACTION_PER_TIME * game_framework.frame_time)*5
         if self.soundon == 0:
             self.sound.repeat_play()
-            self.sound.set_volume(50)
             self.soundon += 1
             #
     def stage2(self):
@@ -59,14 +62,16 @@ class Mapcounter:
         elif self.phase == 4:
             self.stage2_phase4()
 
-        #if self.spawntimer > 750:
-        #    self.spawntimer = 0
-        #if self.counter > 40:
-        #    self.phase = 1
-        #if self.counter > 110:
-        #    self.phase = 2
-        #if self.counter > 160:
-        #    self.phase = 3
+        if self.spawntimer > 750:
+            self.spawntimer = 0
+        if self.counter > 40:
+            self.phase = 1
+        if self.counter > 110:
+            self.phase = 2
+        if self.counter > 160:
+            self.phase = 3
+        if self.bossturn == 1:
+            self.phase = 4
         self.update()
 
     def stage2_phase0(self):

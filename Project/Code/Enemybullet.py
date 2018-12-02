@@ -21,7 +21,8 @@ class Enmey_Bullet:
 
     def draw(self):
         self.image.clip_draw(48, 329, 9, 9, self.x, self.y,25, 25)
-        draw_rectangle(*self.get_bb())
+        if main_state.player.rect == 0:
+            draw_rectangle(*self.get_bb())
 
     def update(self):
         self.x += math.cos(self.angle)*FLY_SPEED_PPS/4 * game_framework.frame_time

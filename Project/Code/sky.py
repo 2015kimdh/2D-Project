@@ -9,6 +9,7 @@ class Sky:
         self.sx = 0
         self.sy = 400
         self.night = stage
+        self.state = 100
 
     def update(self):
         self.x = self.x % 3200 + 10

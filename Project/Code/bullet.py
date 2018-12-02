@@ -1,6 +1,7 @@
 from pico2d import *
 import game_world
 import game_framework
+import main_state
 
 PIXEL_PER_METER = (10.0 / 0.6) # 10 pix 60cm
 FLY_SPEED_KMPH = 120.0
@@ -21,7 +22,8 @@ class P_Bullet:
 
     def draw(self):
         self.image.clip_draw(630, 0, 60, 20, self.x, self.y)
-        draw_rectangle(*self.get_bb())
+        if main_state.player.rect == 0:
+            draw_rectangle(*self.get_bb())
 
     def update(self):
         self.x += FLY_SPEED_PPS * game_framework.frame_time * 2

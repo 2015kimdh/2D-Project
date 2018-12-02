@@ -6,12 +6,14 @@ import pause_state
 from pico2d import *
 import game_framework
 import game_world
+import stageload
 
 from enemy_1 import Enemy_1
 from player import Player
 from sky import Sky
 from bullet import P_Bullet
 from map_counter import Mapcounter
+import stageload
 
 name = "MainState"
 
@@ -23,11 +25,17 @@ def enter():
     global player
     player = Player()
     global sky
-    sky = Sky(mainstage)
+    if stageload.stage == 2:
+        sky = Sky(stageload.stage)
+    else:
+        sky = Sky(mainstage)
 
 
     global map_counter
-    map_counter = Mapcounter(mainstage)
+    if stageload.stage == 2:
+        map_counter = Mapcounter(stageload.stage)
+    else:
+        map_counter = Mapcounter(mainstage)
 
     game_world.add_object(sky, 0)
     game_world.add_object(player, 1)
@@ -85,16 +93,14 @@ def update():
                         map_counter.type2_counter -= 1
                     if Enemy_1.type == 3:
                         map_counter.type3_counter -= 1
-                        map_counter.phase = 4
                     if Enemy_1.type == 4:
                         map_counter.type4_counter -= 1
             if collide(Enemy_1, P_Bullet) and Enemy_1.state == 5 and P_Bullet.state == 0:
                 game_world.remove_object(Enemy_1)
-                player.frame = 0
                 player.state = 8
-    if mainstage == 1:
+    if map_counter.stage == 1:
         Mapcounter.stage1(map_counter)
-    if mainstage == 2:
+    if map_counter.stage == 2:
         Mapcounter.stage2(map_counter)
 
 

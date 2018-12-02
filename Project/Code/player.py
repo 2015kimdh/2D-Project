@@ -27,7 +27,7 @@ FRAMES_PER_ACTION = 8
 
 
 # Boy Event
-RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP, PULLUP_DOWN, PULLUP_UP, PUSHDOWN_DOWN, PUSHDOWN_UP, SLEEP_TIMER, BULLET_UP, BULLET_DOWN, MISSILE_DOWN, MAP_CHANGE, RECT_ON = range(14)
+RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP, PULLUP_DOWN, PULLUP_UP, PUSHDOWN_DOWN, PUSHDOWN_UP, SLEEP_TIMER, BULLET_UP, BULLET_DOWN, MISSILE_DOWN, MAP_CHANGE, RECT_ON, IMMOTAL = range(15)
 
 key_event_table = {
     (SDL_KEYDOWN, SDLK_RIGHT): RIGHT_DOWN,
@@ -42,7 +42,8 @@ key_event_table = {
     (SDL_KEYUP, SDLK_DOWN): PUSHDOWN_UP,
     (SDL_KEYDOWN, SDLK_x): MISSILE_DOWN,
     (SDL_KEYDOWN, SDLK_q): MAP_CHANGE,
-    (SDL_KEYDOWN, SDLK_t): RECT_ON
+    (SDL_KEYDOWN, SDLK_t): RECT_ON,
+    (SDL_KEYDOWN, SDLK_i): IMMOTAL
 }
 
 
@@ -70,7 +71,8 @@ class RunState:
             player.altitude -= FLY_UP_SPEED_PPS
         elif event == PUSHDOWN_UP:
             player.altitude += FLY_UP_SPEED_PPS
-
+        if event == IMMOTAL:
+            player.being_immotar()
         if event == BULLET_DOWN:
             player.armed = 1
         elif event == BULLET_UP:
@@ -95,7 +97,7 @@ class RunState:
     @staticmethod
     def do(player):
         player.frame = (player.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
-        if player.state == 0 or player.state == 9:
+        if player.state == 0 or player.state == 9 or player.state == 11:
             if player.velocity > 0:
                 if player.x < 1550 - player.velocity * game_framework.frame_time:
                     player.x += player.velocity * game_framework.frame_time
@@ -111,14 +113,16 @@ class RunState:
                     player.y += player.altitude * game_framework.frame_time
 
         player.shottime += (FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) * 3
-        if player.armed == 1 and int(player.shottime % 4) == 0 and player.state == 0 or player.state == 9:
+        if player.armed == 1 and int(player.shottime % 4) == 0 and (player.state == 0 or player.state == 9 or player.state == 11):
             player.player_fire_bullet()
-        if player.state == 8 or 9:
-            player.dieframe = player.dieframe + player.FRAMES_PER_ACTION * player.ACTION_PER_TIME * game_framework.frame_time % 21
+        if player.state == 8 or player.state == 9:
+            player.dieframe = (player.dieframe + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 21
+        if player.gage < 100:
+            player.gage = (player.gage + (FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time)*0.5)
 
     @staticmethod
     def draw(player):
-        if player.state == 0:
+        if player.state == 0 or player.state == 11:
             player.image.clip_draw(0, int(player.frame) * 85, 370, 85, player.x, player.y, 185, 42.5)
             if player.rect == 0:
                 draw_rectangle(*player.get_bb())
@@ -138,26 +142,32 @@ class RunState:
             elif int(player.dieframe) < 20:
                 player.image1.clip_draw(137, 80, 114, 80, player.x, player.y, 120, 100)
             elif int(player.dieframe) >= 20:
-                if player.life < 0:
+                if player.life > 0:
                     player.state = 9
                     player.dieframe = 0
                     player.life -= 1
-                if player.life <= 0:
+                elif player.life <= 0:
                     game_framework.change_state(lose_state)
-            elif player.state == 9:
-                if player.frame % 3 == 0:
-                    player.image.clip_draw(0, int(player.frame) * 85, 370, 85, player.x, player.y, 185, 42.5)
-                if player.rect == 0:
-                    draw_rectangle(*player.get_bb())
-                if player.dieframe > 30:
-                    player.state = 0
-                    player.dieframe = 0
+        if player.state == 9:
+            if player.frame % 3 < 2:
+                player.image.clip_draw(0, int(player.frame) * 85, 370, 85, player.x, player.y, 185, 42.5)
+            if player.rect == 0:
+                draw_rectangle(*player.get_bb())
+            if player.dieframe >= 20:
+                player.state = 0
+                player.dieframe = 0
+        player.image2.clip_draw(0, 45, 100, 56, 100-80+player.gage/2*1.6, 150, player.gage*1.6, 30)
+        player.font.draw(200, 150, '%3d' % (player.gage), (250, 180, 120))
+        player.font.draw(250, 150, 'Missile Gage',(120, 250, 120))
+        player.font.draw(250, 50, '%3d Life' % (player.life), (120, 250, 120))
+        if player.state == 11:
+            player.font.draw(250, 180, 'Immune mode', (120, 250, 120))
 
 
 next_state_table = {
     RunState: {PUSHDOWN_DOWN : RunState, PUSHDOWN_UP : RunState, PULLUP_DOWN : RunState, PULLUP_UP : RunState, RIGHT_UP: RunState, LEFT_UP: RunState, LEFT_DOWN: RunState,
                RIGHT_DOWN: RunState, BULLET_DOWN: RunState, BULLET_UP: RunState, MISSILE_DOWN: RunState,
-               MAP_CHANGE : RunState, RECT_ON : RunState}}
+               MAP_CHANGE : RunState, RECT_ON : RunState, IMMOTAL : RunState}}
 
 class Player:
 
@@ -166,6 +176,7 @@ class Player:
         # Boy is only once created, so instance image loading is fine
         self.image = load_image('jet.png')
         self.image1 = load_image('enemy.png')
+        self.image2 = load_image('gage.png')
         self.font = load_font('ENCR10B.TTF', 16)
         self.dir = 1
         self.velocity = 0
@@ -182,7 +193,7 @@ class Player:
         self.cur_state.enter(self, None)
         self.angle = 0
         self.sound.set_volume(10)
-        self.sound2.set_volume(20)
+        self.sound2.set_volume(10)
         self.missile_sound.set_volume(30)
         self.state = 0
         self.rect = 0
@@ -197,6 +208,11 @@ class Player:
             elif sky.night == 1:
                 sky.night = 0
 
+    def being_immotar(self):
+        if self.state == 0:
+            self.state = 11
+        else:
+            self.state = 0
 
     def player_fire_bullet(self):
         bullet = P_Bullet(self.x, self.y, self.dir*15)
@@ -204,11 +220,21 @@ class Player:
         game_world.add_object(bullet, 1)
         self.sound.play()
 
+    def player_fire_bullet_burning(self):
+        bullet = P_Bullet(self.x, self.y+10, self.dir*15)
+        #main_state.pbullet = P_Bullet(self.x, self.y, self.dir*15)
+        game_world.add_object(bullet, 1)
+        bullet = P_Bullet(self.x, self.y - 10, self.dir * 15)
+        game_world.add_object(bullet, 1)
+        self.sound.play()
+
 
     def player_fire_missile(self):
-        pmissile = P_missile(self.x, self.y)
-        game_world.add_object(pmissile, 1)
-        self.missile_sound.play()
+        if self.gage > 50:
+            pmissile = P_missile(self.x, self.y)
+            game_world.add_object(pmissile, 1)
+            self.missile_sound.play()
+            self.gage -= 50
 
     def add_event(self, event):
         self.event_que.insert(0, event)

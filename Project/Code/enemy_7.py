@@ -8,6 +8,7 @@ import main_state
 from player import Player
 from Enemybullet import Enmey_Bullet
 from enemy_1 import Enemy_1
+import win_state
 
 
 PIXEL_PER_METER = (10.0 / 0.6) # 10 pix 60cm
@@ -39,7 +40,7 @@ class Enemy_7:
         self.sx, self.sy = self.x, self.y
         self.state = 2
         self.type = 4
-        self.Hp = 1100
+        self.Hp = 700
         self.slice = 580
         self.frame = 0
         self.move = 0
@@ -47,9 +48,9 @@ class Enemy_7:
         self.bullet_phase = 0
 
     def draw(self):
-        if self.state == 2 and self.phase <= 2:
+        if self.state == 2 and self.Hp >= 400:
             self.image.clip_draw(269, 80, 209, 90, self.x, self.y,400, 250)
-        elif self.state == 2 and self.phase > 2:
+        elif self.state == 2 and self.Hp < 400:
             self.image.clip_draw(269, 181, 209, 90, self.x, self.y, 400, 250)
         elif self.state == 3:
             if int(self.frame) < 6:
@@ -90,6 +91,7 @@ class Enemy_7:
                     Enemy_7.sound.play()
             elif int(self.frame) >= 30:
                 game_world.remove_object(self)
+                game_framework.change_state(win_state)
             self.frame = (self.frame + player.FRAMES_PER_ACTION * player.ACTION_PER_TIME * game_framework.frame_time) % 31
         if main_state.player.rect == 0:
             draw_rectangle(*self.get_bb())
@@ -121,13 +123,13 @@ class Enemy_7:
             self.move = 1
         if self.Hp == 0:
             self.state = 3
-        if self.Hp > 900:
+        if self.Hp > 500:
             self.bullet_phase0()
-        elif self.Hp < 900 and self.Hp > 700:
+        elif self.Hp < 500 and self.Hp > 350:
             self.bullet_phase1()
-        elif self.Hp < 700 and self.Hp > 400:
+        elif self.Hp < 350 and self.Hp > 200:
             self.bullet_phase2()
-        elif self.Hp < 400:
+        elif self.Hp < 200:
             self.bullet_phase3()
 
     def fire_bullet(self, angle):
@@ -175,6 +177,8 @@ class Enemy_7:
     def bullet_phase3(self):
         if self.time % 20 < 9:
             radian = ((self.time % 9) * 45) / 180 * math.pi
+            self.fire_bullet(radian)
+            radian = ((self.time % 9) * 45)+45 / 180 * math.pi
             self.fire_bullet(radian)
         if int(self.time % 10) == 0 and int(self.time) < 250:
             radian = ((self.time % 90)+150) / 180 * math.pi

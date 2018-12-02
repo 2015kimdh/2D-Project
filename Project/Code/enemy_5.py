@@ -6,6 +6,7 @@ import math
 import player
 from player import Player
 from Enemybullet import Enmey_Bullet
+import main_state
 
 
 PIXEL_PER_METER = (10.0 / 0.6) # 10 pix 60cm

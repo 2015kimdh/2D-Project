@@ -75,7 +75,9 @@ class Enemy_6:
                 self.image.clip_draw(137, 80, 114, 80, self.x - 50, self.y + 50, 170, 130)
                 self.image.clip_draw(137, 80, 114, 80, self.x + 50, self.y - 50, 170, 130)
             elif int(self.frame) >= 20:
+                main_state.map_counter.bossturn = 1
                 game_world.remove_object(self)
+
             self.frame = (self.frame + player.FRAMES_PER_ACTION * player.ACTION_PER_TIME * game_framework.frame_time) % 21
         if main_state.player.rect == 0:
             draw_rectangle(*self.get_bb())
@@ -107,9 +109,9 @@ class Enemy_6:
             self.move = 1
         if self.Hp == 0:
             self.state = 3
-        if self.Hp > 200:
+        if self.Hp > 150:
             self.bullet_phase0()
-        elif self.Hp < 200 and self.Hp > 100:
+        elif self.Hp < 150 and self.Hp > 100:
             self.bullet_phase1()
         elif self.Hp < 100:
             self.bullet_phase2()

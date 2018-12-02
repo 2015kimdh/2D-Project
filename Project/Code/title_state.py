@@ -3,6 +3,7 @@ import game_world
 from pico2d import *
 import main_state
 import info_state
+import stageload
 
 name = "TitleState"
 image = None
@@ -39,6 +40,8 @@ def handle_events():
                 game_framework.quit()
             elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_1):
                 stage = 1
+                if stageload.stage == 2:
+                    stageload.stage = 0
                 game_framework.change_state(main_state)
             elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_2):
                 stage = 2

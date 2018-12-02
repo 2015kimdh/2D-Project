@@ -8,6 +8,7 @@ from player import Player
 from Enemybullet import Enmey_Bullet
 from enemy_1 import Enemy_1
 import main_state
+import stageload
 
 
 PIXEL_PER_METER = (10.0 / 0.6) # 10 pix 60cm
@@ -39,7 +40,7 @@ class Enemy_3:
         self.sx, self.sy = self.x, self.y
         self.state = 2
         self.type = 2
-        self.Hp = 500
+        self.Hp = 450
         self.slice = 580
         self.frame = 0
         self.move = 0
@@ -77,6 +78,9 @@ class Enemy_3:
                 self.image.clip_draw(137, 80, 114, 80, self.x + 50, self.y - 50, 170, 130)
             elif int(self.frame) >= 20:
                 game_world.remove_object(self)
+                if main_state.map_counter.stage == 1:
+                    game_framework.change_state(stageload)
+
             self.frame = (self.frame + player.FRAMES_PER_ACTION * player.ACTION_PER_TIME * game_framework.frame_time) % 21
         if main_state.player.rect == 0:
             draw_rectangle(*self.get_bb())
