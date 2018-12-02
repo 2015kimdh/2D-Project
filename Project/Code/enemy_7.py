@@ -40,7 +40,7 @@ class Enemy_7:
         self.sx, self.sy = self.x, self.y
         self.state = 2
         self.type = 4
-        self.Hp = 700
+        self.Hp = 900
         self.slice = 580
         self.frame = 0
         self.move = 0
@@ -123,13 +123,13 @@ class Enemy_7:
             self.move = 1
         if self.Hp == 0:
             self.state = 3
-        if self.Hp > 500:
+        if self.Hp > 700:
             self.bullet_phase0()
-        elif self.Hp < 500 and self.Hp > 350:
+        elif self.Hp < 700 and self.Hp > 550:
             self.bullet_phase1()
-        elif self.Hp < 350 and self.Hp > 200:
+        elif self.Hp < 550 and self.Hp > 300:
             self.bullet_phase2()
-        elif self.Hp < 200:
+        elif self.Hp < 300:
             self.bullet_phase3()
 
     def fire_bullet(self, angle):
@@ -180,10 +180,7 @@ class Enemy_7:
             self.fire_bullet(radian)
             radian = ((self.time % 9) * 45)+45 / 180 * math.pi
             self.fire_bullet(radian)
-        if int(self.time % 10) == 0 and int(self.time) < 250:
-            radian = ((self.time % 90)+150) / 180 * math.pi
-            self.fire_bullet(radian)
-        if int(self.time % 20) == 0:
+        if int(self.time % 10) == 0:
             self.fire_bullet_boss()
 
     def fire_bullet_boss(self):

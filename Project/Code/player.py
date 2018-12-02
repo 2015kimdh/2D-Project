@@ -96,6 +96,7 @@ class RunState:
 
     @staticmethod
     def do(player):
+        player.shottime = (player.shottime + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time)%10
         player.frame = (player.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
         if player.state == 0 or player.state == 9 or player.state == 11:
             if player.velocity > 0:
@@ -112,8 +113,7 @@ class RunState:
                 if player.y > 30 + player.altitude * game_framework.frame_time:
                     player.y += player.altitude * game_framework.frame_time
 
-        player.shottime += (FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) * 3
-        if player.armed == 1 and int(player.shottime % 4) == 0 and (player.state == 0 or player.state == 9 or player.state == 11):
+        if player.armed == 1 and int(player.shottime % 1.75) == 0 and (player.state == 0 or player.state == 9 or player.state == 11):
             player.player_fire_bullet()
         if player.state == 8 or player.state == 9:
             player.dieframe = (player.dieframe + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 21
@@ -192,8 +192,8 @@ class Player:
         self.cur_state = RunState
         self.cur_state.enter(self, None)
         self.angle = 0
-        self.sound.set_volume(10)
-        self.sound2.set_volume(10)
+        self.sound.set_volume(7)
+        self.sound2.set_volume(15)
         self.missile_sound.set_volume(30)
         self.state = 0
         self.rect = 0
@@ -230,11 +230,11 @@ class Player:
 
 
     def player_fire_missile(self):
-        if self.gage > 50:
+        if self.gage > 70:
             pmissile = P_missile(self.x, self.y)
             game_world.add_object(pmissile, 1)
             self.missile_sound.play()
-            self.gage -= 50
+            self.gage -= 70
 
     def add_event(self, event):
         self.event_que.insert(0, event)

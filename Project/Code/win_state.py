@@ -36,7 +36,7 @@ def exit():
 def update():
     global logo_time
     if logo_time < 1.0:
-        image1.opacify(logo_time * 0.03)
+        image1.opacify(logo_time * 0.02)
         image2.opacify(logo_time)
     delay(0.01)
     logo_time += 0.01

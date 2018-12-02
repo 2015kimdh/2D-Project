@@ -65,6 +65,7 @@ class Enemy_4:
             self.state = 3
         if self.time % 100 < 2:
             self.fire_bullet()
+        self.flower_bullet()
 
     def fire_bullet(self):
         anglex = main_state.player.x - self.x;
@@ -73,14 +74,16 @@ class Enemy_4:
         enemybullet = Enmey_Bullet(self.x, self.y, self.angle)
         game_world.add_object(enemybullet, 1)
 
+
     def fire_bullet_2(self, angle):
             self.angle = angle
             enemybullet = Enmey_Bullet(self.x, self.y, self.angle)
             game_world.add_object(enemybullet, 1)
 
+
     def flower_bullet(self):
-        if self.time % 120 < 10:
-            radian = ((self.time % 11) * 36) / 180 * math.pi
+        if self.time % 240 < 7:
+            radian = ((self.time % 7) * 36) / 180 * math.pi
             self.fire_bullet_2(radian)
     def reduce_Hp(self):
         self.Hp -= 1

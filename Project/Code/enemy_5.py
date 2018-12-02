@@ -19,6 +19,7 @@ FLY_UP_SPEED_PPS = (FLY_SPEED_MPS * PIXEL_PER_METER)
 class Enemy_5:
 
     image = None
+    sound = None
 
     def __init__(self, x, y, xpull, ypull, dx, dy):
 
@@ -29,6 +30,9 @@ class Enemy_5:
         self.dx, self.dy = dx, dy
         if Enemy_5.image == None:
             Enemy_5.image = load_image('enemy.png')
+        if Enemy_5.sound == None:
+            Enemy_5.sound = load_wav('bomb.wav')
+            Enemy_5.sound.set_volume(20)
         self.time = 0
         self.x, self.y, self.velocity = self.Type_one_starting_point_x, self.Type_one_starting_point_y, 1
         self.sx, self.sy = self.x, self.y
@@ -46,6 +50,7 @@ class Enemy_5:
         elif self.state == 3:
             if int(self.frame) < 2:
                 self.image.clip_draw(137, 393, 114, 100, self.x, self.y, 200, 200)
+                Enemy_5.sound.play()
             elif int(self.frame) < 4:
                 self.image.clip_draw(137, 313, 114, 77, self.x, self.y, 200, 200)
             elif int(self.frame) < 6:

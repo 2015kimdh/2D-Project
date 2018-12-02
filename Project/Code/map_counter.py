@@ -135,13 +135,13 @@ class Mapcounter:
 
     def stage2_phase3(self):
         if int(self.spawntimer) % 30 == 0:  # type1 spawn
-            if self.type1_counter < 2 and self.spawntimer < 500:
+            if self.type1_counter < 4 and self.spawntimer < 500:
                 enemy = Enemy_4(1200, 1000, 500, -200, 0, -200)
                 game_world.add_object(enemy, 1)
                 enemy = Enemy_4(1200, -200, 500, 200, 0, 800)
                 game_world.add_object(enemy, 1)
                 self.type1_counter += 2
-            elif self.type1_counter < 2 and self.spawntimer > 500:
+            elif self.type1_counter < 4 and self.spawntimer > 500:
                 enemy = Enemy_4(1800, 200, 500, 200, 0, 0)
                 game_world.add_object(enemy, 1)
                 enemy = Enemy_4(1800, 600, 0, -500, 0, 600)  # 시작위치, 꺾이는 정도, 끝 위치
@@ -153,6 +153,19 @@ class Mapcounter:
             self.type3_counter += 1
 
     def stage2_phase4(self):
+        if int(self.spawntimer) % 30 == 0:  # type1 spawn
+            if self.type1_counter < 4 and self.spawntimer < 500:
+                enemy = Enemy_4(1200, 1000, 500, -200, 0, -200)
+                game_world.add_object(enemy, 1)
+                enemy = Enemy_4(1200, -200, 500, 200, 0, 800)
+                game_world.add_object(enemy, 1)
+                self.type1_counter += 2
+            elif self.type1_counter < 4 and self.spawntimer > 500:
+                enemy = Enemy_4(1800, 200, 500, 200, 0, 0)
+                game_world.add_object(enemy, 1)
+                enemy = Enemy_4(1800, 600, 0, -500, 0, 600)  # 시작위치, 꺾이는 정도, 끝 위치
+                game_world.add_object(enemy, 1)
+                self.type1_counter += 2
         if self.type4_counter < 1 and int(self.spawntimer) % 350 == 0:
             enemy = Enemy_7(1900, 200, -500, 0, 1500, 350)
             game_world.add_object(enemy, 1)
@@ -245,6 +258,19 @@ class Mapcounter:
             self.type2_counter += 3
 
     def phase3(self):
+        if int(self.spawntimer) % 150 == 0:  # type1 spawn
+            if self.type1_counter < 4 and self.spawntimer < 500:
+                enemy = Enemy_1(1200, 1000, 500, -200, 0, -200)
+                game_world.add_object(enemy, 1)
+                enemy = Enemy_1(1200, -200, 500, 200, 0, 800)
+                game_world.add_object(enemy, 1)
+                self.type1_counter += 2
+            elif self.type1_counter < 4 and self.spawntimer > 500:
+                enemy = Enemy_1(1800, 200, 500, 200, 0, 0)
+                game_world.add_object(enemy, 1)
+                enemy = Enemy_1(1800, 600, 0, -500, 0, 600)  # 시작위치, 꺾이는 정도, 끝 위치
+                game_world.add_object(enemy, 1)
+                self.type1_counter += 2
         if self.type3_counter < 1 and int(self.spawntimer) % 350 == 0:
             enemy = Enemy_3(1700, 200, -500, 0, 1400, 350)
             game_world.add_object(enemy, 1)
